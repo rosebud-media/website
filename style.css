@@ -1,0 +1,65 @@
+/* Basic styling */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  header {
+    background: #eee;
+    padding: 1em;
+    text-align: center;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  nav {
+    margin-top: 1em;
+  }
+  nav a {
+    margin: 0 0.5em;
+    text-decoration: none;
+  }
+  
+  main {
+    padding: 1em;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    margin-top: 2em;
+  }
+  
+  #articles-list {
+    margin-top: 1em;
+  }
+  
+  .article-item {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+  
+  .article-item h3 {
+    margin-top: 0;
+  }
+  
+  .article-meta {
+    font-style: italic;
+    color: #555;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+  }
+  
+  footer {
+    background: #eee;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+  }
+  

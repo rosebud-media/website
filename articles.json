@@ -1,0 +1,19 @@
+[
+    {
+      "title": "My First Free Speech Article",
+      "cid": "f01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a",
+      "author": "Anonymous",
+      "date_approved": "2025-02-10",
+      "summary": "An article about the importance of uncensored opinions.",
+      "tags": ["free-speech", "opinion", "uncensored"]
+    },
+    {
+      "title": "Reflections on Modern Journalism",
+      "cid": "f01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a",
+      "author": "Jane Doe",
+      "date_approved": "2025-03-01",
+      "summary": "Personal perspective on how news outlets shape public opinion.",
+      "tags": ["journalism", "media"]
+    }
+  ]
+  
