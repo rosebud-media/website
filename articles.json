@@ -1,19 +1,146 @@
 [
-    {
-      "title": "My First Free Speech Article",
-      "cid": "f01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a",
-      "author": "Anonymous",
-      "date_approved": "2025-02-10",
-      "summary": "An article about the importance of uncensored opinions.",
-      "tags": ["free-speech", "opinion", "uncensored"]
-    },
-    {
-      "title": "Reflections on Modern Journalism",
-      "cid": "f01701220c3c4733ec8affd06cf9e9ff50ffc6bcd2ec85a6170004bb709669c31de94391a",
-      "author": "Jane Doe",
-      "date_approved": "2025-03-01",
-      "summary": "Personal perspective on how news outlets shape public opinion.",
-      "tags": ["journalism", "media"]
-    }
-  ]
-  
+  {
+    "title": "A 5 step attack process that crypto projects should defend against",
+    "cid": "QmSkrYheNsHmRWfrGfBAsxC3y7qLXr1pCUqfdDjFfFDPpE",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A look at vulnerabilities and security measures for crypto projects to be aware of",
+    "tags": ["blockchain", "cryptocurrency", "ethereum", "cybersecurity"]
+  },
+  {
+    "title": "A beginners guide for choosing an Ethereum layer 2",
+    "cid": "QmVHMVSKBUrSf42Ugws5S9A6Ett9mDUQvkbPjADg5ZGRGU",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A look at popular layer two Ethereum networks to launch a project on",
+    "tags": ["blockchain", "cryptocurrency", "ethereum", "polygon", "base","arbitrum","optimism","linea"]
+  },
+  {
+    "title": "Developing Beyond Ethereum: A Developer’s Guide to Polygon, Base, Arbitrum, Optimism, and Linea",
+    "cid": "QmXezjN2PJtLZ7AneScNgejY1VKdSfcn4T8iQT2daexsx2",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A developers guide for choosing the right layer two for your new dApp.",
+    "tags": ["blockchain", "ethereum", "development", "Base", "Polygon", "Arbitrum", "Optimism", "Linea" ]
+  },
+  {
+    "title": "A crypto Animal Farm",
+    "cid": "QmSiaZF1dbuGbRWJ79uRhEPCU3TWbtq9Bg1nSi8PNNDevE",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A look at the risks of replacing one corrupt financial system with another",
+    "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics" ]
+  },
+  {
+    "title": "AI Agent Token Value Challenges",
+    "cid": "QmPcJ7ueP3dwegYZPC5e5kXZnYhxcvkCiRZMy7grtFE1ws",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "The challenges facing token value creation in AI Agent projects",
+    "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Virtuals", "Eliza" ]
+  },
+  {
+    "title": "AIs, AGIs and Bots as a user base",
+    "cid": "QmdFnynoi5oxgXe2m7eRF1G4a6kKxneA8op9kG7TkMFEHx",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "When AI agents are good paying customers",
+    "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Virtuals", "Eliza" ]
+  },
+  {
+    "title": "An Introduction to Character Building for the Eliza AI Agent System",
+    "cid": "QmdkdDM9GTe934zHup2qZEvUzVeo42vZXEaaUnbwQx9RYR",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A guide to character building in the Eliza AI system",
+    "tags": ["blockchain", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Eliza" ]
+  },
+  {
+    "title": "Running Your Custom AI Agent Built with Eliza",
+    "cid": "QmZnfbFWtkiVfoFbkWH1JvzF86XLtY1qtU5kj9QoSTu7Mq",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "Building and running a new AI agent using the Eliza AI agent framework",
+    "tags": ["blockchain", "ethereum", "development", "tokenomics" ]
+  },
+  {
+    "title": "Applying value flow to an AMM",
+    "cid": "QmdupzAgkSSttFufVPQQyqJRVrL3d5ACSx6d85DpGikjph",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "Thinking through how to create value flow in an AMM",
+    "tags": ["blockchain", "ethereum", "tokenomics", "DeFi" ]
+  },
+  {
+    "title": "Bringing your USD-Collateralized Stablecoin to Linea: A Guide for Developers",
+    "cid": "QmTPLap6MjkKDQrdgfCYdK6s8YdGaLMSANpxSA7LiFR5a1",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "Linea is the new ZK network from Consensys. Here we look at building a stable coin for the network.",
+    "tags": ["blockchain", "ethereum", "tokenomics", "Linea" ]
+  },
+  {
+    "title": "Equitoria: A New Vision for Decentralized Governance and Equality",
+    "cid": "QmeaoVbQxMa4g8jcDLQMQSQLnpBVLG3PfrRfeVP47HaDwB",
+    "author": "Equitoria",
+    "date_approved": "2025-03-11",
+    "summary": "An introduction to the new digital city state of Equitoria.",
+    "tags": ["politics", "society", "culture", "economics", "constitution" ]
+  },
+  {
+    "title": "Transitioning from Ethereum to Solana: A Guide for Users",
+    "cid": "QmWrP7339paw16ttrcRXtvn3zpZ3stPxwXjnNWg4AQNkyj",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A user guide for becoming familiar with Solana for someone familiar with Ethereum",
+    "tags": ["blockchain", "ethereum", "solana" ]
+  },
+  {
+    "title": "Migrating from Ethereum to Solana: A Developer’s Guide",
+    "cid": "QmUqc2ZAatuo7VbVP7c518DQvSXcf7Y9rcoJiCNYRA9fcg",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A migration path for developers moving to Solana's Rust based network",
+    "tags": ["blockchain", "ethereum", "development", "solana" ]
+  },
+  {
+    "title": "Reimagining the Future: Commodore’s Continued Legacy in Tech",
+    "cid": "QmceZTiTj5cwRmXABJQYVjmKtwyMVgrdiFBBg3nWgeYrUi",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "What would the world of technology look like if Commodore was still around?",
+    "tags": ["commodore", "amiga", "retro", "retro-computing" ]
+  },
+  {
+    "title": "Rethinking tokenomics",
+    "cid": "QmVwXWrfD8wdDzGEHgX3N3arqk8gaFKKPuFdXtR22RXpqt",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A new look at building good tokenomics for a blockchain project",
+    "tags": ["blockchain", "ethereum", "development", "tokenomics" ]
+  },
+  {
+    "title": "Startup Web3 project economics",
+    "cid": "QmPbhpCcjLxtk8bjuHNsW9FQCiBRxsNcmS4YKfLXA6DSDM",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "Beyond tokenomics, a look at a healthy economics model for blockchain projects",
+    "tags": ["blockchain", "ethereum", "development", "tokenomics" ]
+  },
+  {
+    "title": "Virtuals AI Agent protocol",
+    "cid": "QmUNkcDG9csnvUez5CGQkdhf2tCTXs7G2XwTbcwyVkTSoQ",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "A developer and user guide to building AI agents for the Virtuals framework",
+    "tags": ["blockchain", "ethereum", "ai", "artificial-intelligence" ]
+  },
+  {
+    "title": "Why D&D Enthusiasts Make Epic Scrum Teams",
+    "cid": "QmRmn58jpTehPXZFi4fhzvrGf7KGRUxeJV9RmpkYoF7ToP",
+    "author": "TheNewAutonomy",
+    "date_approved": "2025-03-11",
+    "summary": "Running a scrum like an epic DnD Dungeon Master",
+    "tags": ["scrum", "agile", "development", "project-management" ]
+  }
+]
