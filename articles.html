@@ -8,32 +8,31 @@
 </head>
 <body>
   <header>
-    <h1>Rosebud World: Approved Articles</h1>
+    <h1>Article Creation Guidelines</h1>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index.html">Home</a> |
+      <a href="articles.html">Articles</a> |
+      <a href="ipfs.html">About IPFS</a> |
+      <a href="guidelines.html">Article Guidelines</a>
     </nav>
   </header>
 
   <main>
     <section>
       <h2>Articles</h2>
-      <p>
-        Below is a list of community-submitted articles that have been approved.
-      </p>
+      <p>Below is a list of community-submitted articles that have been approved.</p>
       
-      <!-- Search/Filter by Tag -->
-      <div id="search-container">
-        <label for="tagSearch">Filter by Tag: </label>
-        <input 
-          type="text" 
-          id="tagSearch" 
-          name="tagSearch" 
-          placeholder="e.g. 'journalism' or 'opinion'"
-        />
+      <!-- Filtering controls -->
+      <div id="filter-container">
+        <label for="tagSearch">Filter by Tag:</label>
+        <input type="text" id="tagSearch" name="tagSearch" placeholder="e.g. 'journalism'" />
+
+        <label for="authorSearch">Filter by Author:</label>
+        <input type="text" id="authorSearch" name="authorSearch" placeholder="e.g. 'Jane Doe'" />
       </div>
 
       <div id="articles-list">
-        <!-- The list of articles will be loaded here by main.js -->
+        <!-- Articles will be dynamically loaded here -->
       </div>
     </section>
   </main>

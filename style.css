@@ -1,5 +1,4 @@
-/* Basic styling */
-
+/* General Styles */
 body {
   font-family: sans-serif;
   margin: 0;
@@ -35,6 +34,19 @@ h2 {
   margin-top: 2em;
 }
 
+/* Filter Container Styles */
+#filter-container {
+  margin-bottom: 1em;
+}
+#filter-container label {
+  margin-right: 0.5em;
+}
+#filter-container input {
+  margin-right: 1em;
+  padding: 0.3em;
+}
+
+/* Articles List */
 #articles-list {
   margin-top: 1em;
 }
@@ -56,13 +68,7 @@ h2 {
   margin-bottom: 1em;
 }
 
-footer {
-  background: #eee;
-  text-align: center;
-  padding: 1em;
-  margin-top: 2em;
-}
-
+/* Mature Content Indicator */
 .mature-indicator {
   display: inline-block;
   background-color: #ffdddd;
@@ -71,4 +77,12 @@ footer {
   padding: 0.2em 0.4em;
   border-radius: 4px;
   margin-top: 0.5em;
+}
+
+/* Footer */
+footer {
+  background: #eee;
+  text-align: center;
+  padding: 1em;
+  margin-top: 2em;
 }
