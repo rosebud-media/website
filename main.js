@@ -52,6 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
       metaEl.textContent = `Author: ${article.author} | Approved: ${article.date_approved}`;
       articleDiv.appendChild(metaEl);
 
+      // Mature Indicator
+      if (article.mature) {
+        const matureEl = document.createElement("span");
+        matureEl.textContent = "Mature Content";
+        matureEl.classList.add("mature-indicator");
+        articleDiv.appendChild(matureEl);
+      }
+
       // Tags
       if (article.tags && article.tags.length > 0) {
         const tagsEl = document.createElement("p");
@@ -59,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         articleDiv.appendChild(tagsEl);
       }
 
-      // Link to IPFS
+      // Link to IPFS gateway
       const linkEl = document.createElement("a");
       linkEl.href = `https://ipfs.io/ipfs/${article.cid}`;
       linkEl.target = "_blank";
@@ -79,10 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Filter articles whose tags contain the searchValue
-    // or you could also filter by article.title or author
     const filtered = allArticles.filter((article) => {
       if (!article.tags) return false;
-      // check if any tag includes the search string
       return article.tags.some((tag) => tag.toLowerCase().includes(searchValue));
     });
 

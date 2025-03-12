@@ -62,3 +62,13 @@ footer {
   padding: 1em;
   margin-top: 2em;
 }
+
+.mature-indicator {
+  display: inline-block;
+  background-color: #ffdddd;
+  color: #a00;
+  font-weight: bold;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  margin-top: 0.5em;
+}
