@@ -79,6 +79,35 @@ h2 {
   margin-top: 0.5em;
 }
 
+/* Tag Cloud */
+#tag-cloud {
+  margin: 1em 0;
+  line-height: 2;
+}
+.tag-cloud-item {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 600;
+}
+.tag-cloud-item:hover {
+  text-decoration: underline;
+}
+
+/* Author List */
+#authors-list {
+  margin: 1em 0;
+}
+.author-item {
+  margin: 0.2em 0;
+}
+.author-list-item {
+  text-decoration: none;
+  color: #333;
+}
+.author-list-item:hover {
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   background: #eee;
