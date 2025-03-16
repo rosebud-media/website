@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Approved Articles | Rosebud World</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -18,33 +18,32 @@
   </header>
 
   <main>
+    <!-- Tag Cloud and Author List -->
     <section>
       <h2>Popular Tags</h2>
-      <!-- Tag cloud container -->
       <div id="tag-cloud"></div>
     </section>
 
     <section>
       <h2>Authors</h2>
-      <!-- Author list container -->
       <div id="authors-list"></div>
     </section>
 
+    <!-- Filtering Controls & Articles List -->
     <section>
       <h2>Articles</h2>
       <p>Below is a list of community-submitted articles that have been approved.</p>
       
-      <!-- Filtering controls -->
       <div id="filter-container">
         <label for="tagSearch">Filter by Tag:</label>
         <input type="text" id="tagSearch" name="tagSearch" placeholder="e.g. 'journalism'" />
 
         <label for="authorSearch">Filter by Author:</label>
-        <input type="text" id="authorSearch" name="authorSearch" placeholder="e.g. 'Jane Doe'" />
+        <input type="text" id="authorSearch" name="authorSearch" placeholder="e.g. 'TheNewAutonomy'" />
       </div>
 
       <div id="articles-list">
-        <!-- Articles will be dynamically loaded here -->
+        <!-- Articles will be loaded here dynamically -->
       </div>
     </section>
   </main>
@@ -53,6 +52,7 @@
     <p>&copy; 2025 Rosebud World</p>
   </footer>
 
+  <!-- Main JavaScript -->
   <script src="main.js"></script>
 </body>
 </html>
