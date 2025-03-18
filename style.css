@@ -1,71 +1,117 @@
-/* General Styles */
+/* Root Variables for easy customization */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --light-bg: #f8f9fa;
+  --header-bg: #e9ecef;
+  --footer-bg: #e9ecef;
+  --border-color: #dee2e6;
+  --text-color: #333;
+  --font-family: 'Roboto', sans-serif; /* Consider loading this via Google Fonts */
+}
+
+/* Global Reset & Box Sizing */
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: sans-serif;
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--light-bg);
+  color: var(--text-color);
   line-height: 1.6;
 }
 
+/* Header */
 header {
-  background: #eee;
-  padding: 1em;
+  background: var(--header-bg);
+  padding: 1.5rem;
   text-align: center;
+  border-bottom: 1px solid var(--border-color);
 }
 
 header h1 {
   margin: 0;
+  font-size: 2rem;
 }
 
 nav {
-  margin-top: 1em;
-}
-nav a {
-  margin: 0 0.5em;
-  text-decoration: none;
+  margin-top: 1rem;
 }
 
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
 main {
-  padding: 1em;
-  max-width: 800px;
+  padding: 1.5rem;
+  max-width: 960px;
   margin: 0 auto;
 }
 
+/* Headings */
 h2 {
-  margin-top: 2em;
+  margin-top: 2rem;
+  font-size: 1.75rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
 }
 
-/* Filter Container */
+/* Filter Container (if used) */
 #filter-container {
-  margin-bottom: 1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
+
 #filter-container label {
-  margin-right: 0.5em;
+  margin-right: 0.5rem;
 }
+
 #filter-container input {
-  margin-right: 1em;
-  padding: 0.3em;
+  padding: 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
 }
 
 /* Articles List */
 #articles-list {
-  margin-top: 1em;
+  margin-top: 1.5rem;
 }
 
 .article-item {
-  border: 1px solid #ccc;
-  padding: 1em;
-  margin-bottom: 1em;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease;
+}
+
+.article-item:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .article-item h3 {
   margin-top: 0;
+  font-size: 1.5rem;
 }
 
 .article-meta {
   font-style: italic;
-  color: #555;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
+  color: var(--secondary-color);
+  margin: 0.5rem 0;
 }
 
 /* Mature Content Indicator */
@@ -74,44 +120,50 @@ h2 {
   background-color: #ffdddd;
   color: #a00;
   font-weight: bold;
-  padding: 0.2em 0.4em;
+  padding: 0.3rem 0.6rem;
   border-radius: 4px;
-  margin-top: 0.5em;
+  margin-top: 0.5rem;
 }
 
 /* Tag Cloud */
 #tag-cloud {
-  margin: 1em 0;
-  line-height: 2;
+  margin: 1.5rem 0;
 }
+
 .tag-cloud-item {
   text-decoration: none;
-  color: #007bff;
+  color: var(--primary-color);
   font-weight: 600;
+  margin-right: 0.5rem;
 }
+
 .tag-cloud-item:hover {
   text-decoration: underline;
 }
 
 /* Author List */
 #authors-list {
-  margin: 1em 0;
+  margin: 1.5rem 0;
 }
+
 .author-item {
-  margin: 0.2em 0;
+  margin: 0.3rem 0;
 }
+
 .author-list-item {
   text-decoration: none;
-  color: #333;
+  color: var(--text-color);
 }
+
 .author-list-item:hover {
   text-decoration: underline;
 }
 
 /* Footer */
 footer {
-  background: #eee;
+  background: var(--footer-bg);
   text-align: center;
-  padding: 1em;
-  margin-top: 2em;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
 }

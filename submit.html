@@ -5,6 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Submit Your Article | Rosebud World</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Additional styles for the form card */
+    .form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    #statusMessage {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -31,43 +84,45 @@
 
     <section>
       <h2>Article Submission Form</h2>
-      <form id="submissionForm">
-        <div>
-          <label for="title">Title (max 50 characters):</label>
-          <input type="text" id="title" name="title" maxlength="50" placeholder="Article title" required />
-        </div>
-        <div>
-          <label for="author">Author Handle:</label>
-          <input type="text" id="author" name="author" placeholder="Your handle" required />
-        </div>
-        <div>
-          <label for="date_approved">Submission Date:</label>
-          <input type="date" id="date_approved" name="date_approved" required />
-        </div>
-        <div>
-          <label for="summary">Summary:</label>
-          <textarea id="summary" name="summary" rows="3" placeholder="A brief summary" required></textarea>
-        </div>
-        <div>
-          <label for="tags">Tags (comma-separated):</label>
-          <input type="text" id="tags" name="tags" placeholder="e.g. blockchain, free-speech" />
-        </div>
-        <div>
-          <label for="mature">Mature Content:</label>
-          <select id="mature" name="mature">
-            <option value="false" selected>No</option>
-            <option value="true">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="file">Select Article File (text or binary):</label>
-          <input type="file" id="file" name="file" accept=".txt,.md,.html,.pdf,.doc,.docx" required />
-        </div>
-        <div>
-          <button type="submit">Submit Article</button>
-        </div>
-      </form>
-      <p id="statusMessage"></p>
+      <div class="form-container">
+        <form id="submissionForm">
+          <div class="form-group">
+            <label for="title">Title (max 50 characters):</label>
+            <input type="text" id="title" name="title" maxlength="50" placeholder="Article title" required />
+          </div>
+          <div class="form-group">
+            <label for="author">Author Handle:</label>
+            <input type="text" id="author" name="author" placeholder="Your handle" required />
+          </div>
+          <div class="form-group">
+            <label for="date_approved">Submission Date:</label>
+            <input type="date" id="date_approved" name="date_approved" required />
+          </div>
+          <div class="form-group">
+            <label for="summary">Summary:</label>
+            <textarea id="summary" name="summary" rows="3" placeholder="A brief summary" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tags">Tags (comma-separated):</label>
+            <input type="text" id="tags" name="tags" placeholder="e.g. blockchain, free-speech" />
+          </div>
+          <div class="form-group">
+            <label for="mature">Mature Content:</label>
+            <select id="mature" name="mature">
+              <option value="false" selected>No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="file">Select Article File (text or binary):</label>
+            <input type="file" id="file" name="file" accept=".txt,.md,.html,.pdf,.doc,.docx" required />
+          </div>
+          <div class="form-group">
+            <button type="submit">Submit Article</button>
+          </div>
+        </form>
+        <p id="statusMessage"></p>
+      </div>
     </section>
   </main>
 
