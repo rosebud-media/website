@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Your Article | Rosebud World</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Submit Your Article</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="articles.html">Articles</a> |
+      <a href="guidelines.html">Guidelines</a> |
+      <a href="encrypt.html">Encrypt</a> |
+      <a href="submit.html">Submit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Submission Workflow</h2>
+      <p>
+        Fill out the form below. Your article and its metadata will be <strong>encrypted in your browser</strong> and uploaded as ciphertext to the Matrix content repository. 
+        We then send a standard <code>m.file</code> event so that the file appears as an attachment in the room. 
+        Because it’s encrypted, Element may call it “Invalid file,” but you can still download it. 
+        Decryption requires the RSA‑encrypted AES key from the event.
+      </p>
+    </section>
+
+    <section>
+      <h2>Article Submission Form</h2>
+      <form id="submissionForm">
+        <div>
+          <label for="title">Title (max 50 characters):</label>
+          <input type="text" id="title" name="title" maxlength="50" placeholder="Article title" required />
+        </div>
+        <div>
+          <label for="author">Author Handle:</label>
+          <input type="text" id="author" name="author" placeholder="Your handle" required />
+        </div>
+        <div>
+          <label for="date_approved">Submission Date:</label>
+          <input type="date" id="date_approved" name="date_approved" required />
+        </div>
+        <div>
+          <label for="summary">Summary:</label>
+          <textarea id="summary" name="summary" rows="3" placeholder="A brief summary" required></textarea>
+        </div>
+        <div>
+          <label for="tags">Tags (comma-separated):</label>
+          <input type="text" id="tags" name="tags" placeholder="e.g. blockchain, free-speech" />
+        </div>
+        <div>
+          <label for="mature">Mature Content:</label>
+          <select id="mature" name="mature">
+            <option value="false" selected>No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div>
+          <label for="file">Select Article File (text or binary):</label>
+          <input type="file" id="file" name="file" accept=".txt,.md,.html,.pdf,.doc,.docx" required />
+        </div>
+        <div>
+          <button type="submit">Submit Article</button>
+        </div>
+      </form>
+      <p id="statusMessage"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Rosebud World</p>
+  </footer>
+
+  <!-- Matrix JS SDK from a CDN -->
+  <script src="https://libraries.projects.cavi.au.dk/javascript/matrix-js-sdk/23.2.0/browser-matrix.min.js"></script>
+  
+  <!-- Include Olm (make sure both olm.js and olm.wasm are available in libs/) -->
+  <script src="libs/olm.js"></script>
+
+  <!-- Initialize Olm -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (typeof Olm === "undefined") {
+        console.error("Olm library is not loaded correctly.");
+        return;
+      }
+      await Olm.init();
+      console.log("Olm initialized.");
+    });
+  </script>
+
+  <!-- Main Script: Matrix client initialization and form submission with encryption -->
+  <script type="module">
+    // Make Olm globally available
+    window.Olm = Olm;
+
+    // --- Encryption Utility Functions ---
+    function pemToArrayBuffer(pem) {
+      const b64Lines = pem
+        .replace(/-----BEGIN PUBLIC KEY-----/, '')
+        .replace(/-----END PUBLIC KEY-----/, '')
+        .replace(/\s/g, '');
+      const binaryString = window.atob(b64Lines);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
+
+    async function importRsaPublicKey(pemKey) {
+      const arrayBuffer = pemToArrayBuffer(pemKey);
+      return window.crypto.subtle.importKey(
+        "spki",
+        arrayBuffer,
+        { name: "RSA-OAEP", hash: "SHA-256" },
+        true,
+        ["encrypt"]
+      );
+    }
+
+    function arrayBufferToBase64(buffer) {
+      let binary = '';
+      const bytes = new Uint8Array(buffer);
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return window.btoa(binary);
+    }
+
+    // --- Matrix Client Configuration ---
+    const homeserverUrl = "https://matrix.org";
+    const userId = "@rosebud1:matrix.org";
+    const accessToken = "syt_cm9zZWJ1ZDE_paIOyAvfPWeGbPsbtzrI_0bDq7k"; 
+    const submissionRoomId = "!YwulBdMgSqohgEsmHH:matrix.org";
+    const deviceId = "rosebud_encryption_client";
+
+    // Create the Matrix client
+    const matrixClient = matrixcs.createClient({
+      baseUrl: homeserverUrl,
+      accessToken,
+      userId,
+      deviceId
+    });
+
+    // Initialize Matrix crypto and start client syncing
+    await matrixClient.initCrypto();
+    matrixClient.startClient({ initialSyncLimit: 10 });
+    matrixClient.once("sync", (state) => {
+      if (state === "PREPARED") {
+        console.log("Matrix client is synced and E2EE is ready.");
+        enableFormSubmission(matrixClient, submissionRoomId);
+      }
+    });
+
+    // --- Public Key for RSA Encryption ---
+    const publicKeyPem = `
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoruF2EMJBLz0rmSfk0Mp
+XdX0CGumI9UrxNuzezuKXkQAGHlKSACv7GnrjzLWnL0r81wPN3izPdBXV9Lv9Tzl
+JmQeIfRBj6UFregBvaqLe/Akly9FjqAJlfq5/3no7m/0byWfL+1EuOhvfZJuTaYb
+jV8a2JPVAB4raIAyXAE70zcLLhH8/lsA3WKE4mA4T7vl3ubWfF53/oVZjjJFsFqB
+X/OpZWif3xApseVHMWDsqSRkObH30B749ojNxt9hy4tbbhbcZ5wcSkVj9TnN8uQL
+WrVHeBLFFDHdkjGIwDSAaROq80Bds99Y84Vncw1Rk4vIwis1WBNgV0Y8HoEl/dJb
+Ph+2890c/LAMVOQPjatmD76jXr/9X5OHqlQ1jBFuUG1ATXl3wHvJ+AAKnO+/WnMU
+p2SgoP2wfpGJm0DD6q6LnL+bynUAt3cCrzk9AQJ4xx1CLvjOe96ubN076GghXK3b
+cgxAQZfVvcoeDKTL+sLFH6dwa3auOnRPqoQD7MvQmS6vXWjnd8Wcp/etD5J1dqv+
+mQjNRGpk3l9YYYPkHq4eUvQcEia7XvDgpgzxsoGrzfSWW8/sprrG4xkflaT59jLZ
+VRzEG7PZPV93dCeF+PU9R7xIQRzqfWPJ6dwYjrdhjzONVMLKiqcuMRLCawb3rnmq
+gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
+-----END PUBLIC KEY-----
+`;
+
+    // --- Enable Form Submission ---
+    function enableFormSubmission(matrixClient, roomId) {
+      const submissionForm = document.getElementById("submissionForm");
+      const statusMessage = document.getElementById("statusMessage");
+
+      submissionForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusMessage.innerText = "Processing submission...";
+
+        try {
+          // Gather form inputs
+          const title = document.getElementById("title").value.trim();
+          const author = document.getElementById("author").value.trim();
+          const dateApproved = document.getElementById("date_approved").value;
+          const summary = document.getElementById("summary").value.trim();
+          const tags = document.getElementById("tags")
+            .value
+            .split(",")
+            .map(t => t.trim())
+            .filter(t => t !== "");
+          const mature = document.getElementById("mature").value === "true";
+          
+          const fileInput = document.getElementById("file");
+          if (fileInput.files.length === 0) {
+            statusMessage.innerText = "Please select a file.";
+            return;
+          }
+
+          // Read file as ArrayBuffer for binary safety
+          const file = fileInput.files[0];
+          const fileArrayBuffer = await file.arrayBuffer();
+
+          // Generate a random AES-GCM key
+          const aesKey = await window.crypto.subtle.generateKey(
+            { name: "AES-GCM", length: 256 },
+            true,
+            ["encrypt", "decrypt"]
+          );
+
+          // Export the raw AES key so we can encrypt it with RSA
+          const rawAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
+
+          // Generate a random IV (12 bytes recommended for AES-GCM)
+          const iv = window.crypto.getRandomValues(new Uint8Array(12));
+
+          // Encrypt the file with AES-GCM
+          const encryptedFileBuffer = await window.crypto.subtle.encrypt(
+            { name: "AES-GCM", iv },
+            aesKey,
+            fileArrayBuffer
+          );
+
+          // Convert the ciphertext into a Blob for uploading
+          const ciphertextBlob = new Blob([encryptedFileBuffer], { type: "application/octet-stream" });
+
+          // Upload the encrypted file to the Matrix content repository
+          // rawResponse: false typically returns a string like "mxc://matrix.org/abc123"
+          const uploadResult = await matrixClient.uploadContent(ciphertextBlob, {
+            name: file.name,
+            type: "application/octet-stream",
+            rawResponse: false
+          });
+
+          console.log("uploadResult:", uploadResult);
+
+          // Derive the actual mxc URI (string) from the uploadResult
+          let mxcUri;
+          if (typeof uploadResult === "string") {
+            mxcUri = uploadResult;  // e.g. "mxc://matrix.org/abc123"
+          } else if (uploadResult && uploadResult.content_uri) {
+            mxcUri = uploadResult.content_uri; // e.g. { content_uri: "mxc://..." }
+          } else {
+            throw new Error("No valid MXC URI returned from uploadContent");
+          }
+
+          // Import the RSA public key and encrypt the AES key
+          const rsaPublicKey = await importRsaPublicKey(publicKeyPem);
+          const encryptedAesKeyBuffer = await window.crypto.subtle.encrypt(
+            { name: "RSA-OAEP" },
+            rsaPublicKey,
+            rawAesKey
+          );
+
+          // Convert the encrypted AES key and IV to Base64
+          const encryptedAesKeyB64 = arrayBufferToBase64(encryptedAesKeyBuffer);
+          const ivB64 = arrayBufferToBase64(iv.buffer);
+
+          // Prepare a standard "m.file" event so the file appears as an attachment
+          // We'll store your metadata and encryption info in custom fields.
+          const content = {
+            msgtype: "m.file",
+            // The user will see this name in the room
+            body: file.name + " (encrypted)",
+            url: mxcUri,  // Must be a valid "mxc://..." string
+            info: {
+              // Basic file info for the client
+              size: ciphertextBlob.size,
+              mimetype: "application/octet-stream"
+            },
+            // Custom fields to store your metadata
+            "rosebud:metadata": {
+              title,
+              author,
+              dateApproved,
+              summary,
+              tags,
+              mature,
+              originalFilename: file.name,
+              timestamp: new Date().toISOString()
+            },
+            // Store your encryption details
+            "rosebud:encryption": {
+              encryptedKey: encryptedAesKeyB64,
+              iv: ivB64
+            }
+          };
+
+          // Send the "m.file" event to the room
+          await matrixClient.sendEvent(roomId, "m.room.message", content);
+
+          statusMessage.innerText = "Submission successful!";
+          submissionForm.reset();
+        } catch (error) {
+          console.error("Error during submission:", error);
+          statusMessage.innerText = "Submission failed: " + error.message;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
