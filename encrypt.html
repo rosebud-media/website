@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encrypt Article for IPFS | Rosebud World</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Include OpenPGP.js from a CDN -->
-  <script src="https://unpkg.com/openpgp@5.5.0/dist/openpgp.min.js"></script>
   <style>
     /* Basic inline styling for the encryption tool page */
     body {
@@ -56,18 +54,20 @@
     <section>
       <h2>Instructions</h2>
       <p>
-        If you wish to protect your article before submitting it to our platform, use this tool to encrypt your file using our public key.
+        Use this tool to encrypt your article file before uploading it to IPFS.
+        Your file will be encrypted in your browser using AES‑GCM, and the AES key will be RSA‑encrypted using our public key.
+        The resulting JSON file (with extension <code>.pgp</code>) contains all the encryption data needed.
       </p>
       <ol>
-        <li>Select the file you wish to encrypt (plain text, HTML, or Markdown).</li>
+        <li>Select the file you wish to encrypt (plain text, HTML, Markdown, PDF, etc.).</li>
         <li>Click the "Encrypt and Download" button.</li>
-        <li>The encrypted file will be downloaded with the extension <code>.pgp</code>. You can then upload this file to IPFS.</li>
+        <li>The encrypted file will be downloaded with the <code>.pgp</code> extension. You can then upload this file to IPFS.</li>
       </ol>
     </section>
 
     <section>
       <h2>Encrypt Your File</h2>
-      <input type="file" id="fileInput" accept=".txt,.html,.md" />
+      <input type="file" id="fileInput" accept=".txt,.html,.md,.pdf,.doc,.docx" />
       <button id="encryptButton">Encrypt and Download</button>
       <div id="status"></div>
     </section>
@@ -78,114 +78,136 @@
   </footer>
 
   <script>
-    const publicKeyArmored = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+    // RSA public key in SPKI format (same as used in submit.html)
+    const publicKeyPem = `
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoruF2EMJBLz0rmSfk0Mp
+XdX0CGumI9UrxNuzezuKXkQAGHlKSACv7GnrjzLWnL0r81wPN3izPdBXV9Lv9Tzl
+JmQeIfRBj6UFregBvaqLe/Akly9FjqAJlfq5/3no7m/0byWfL+1EuOhvfZJuTaYb
+jV8a2JPVAB4raIAyXAE70zcLLhH8/lsA3WKE4mA4T7vl3ubWfF53/oVZjjJFsFqB
+X/OpZWif3xApseVHMWDsqSRkObH30B749ojNxt9hy4tbbhbcZ5wcSkVj9TnN8uQL
+WrVHeBLFFDHdkjGIwDSAaROq80Bds99Y84Vncw1Rk4vIwis1WBNgV0Y8HoEl/dJb
+Ph+2890c/LAMVOQPjatmD76jXr/9X5OHqlQ1jBFuUG1ATXl3wHvJ+AAKnO+/WnMU
+p2SgoP2wfpGJm0DD6q6LnL+bynUAt3cCrzk9AQJ4xx1CLvjOe96ubN076GghXK3b
+cgxAQZfVvcoeDKTL+sLFH6dwa3auOnRPqoQD7MvQmS6vXWjnd8Wcp/etD5J1dqv+
+mQjNRGpk3l9YYYPkHq4eUvQcEia7XvDgpgzxsoGrzfSWW8/sprrG4xkflaT59jLZ
+VRzEG7PZPV93dCeF+PU9R7xIQRzqfWPJ6dwYjrdhjzONVMLKiqcuMRLCawb3rnmq
+gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
+-----END PUBLIC KEY-----
+`;
 
-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
-=NonR
------END PGP PUBLIC KEY BLOCK-----`;
+    // Utility: Convert PEM string to an ArrayBuffer
+    function pemToArrayBuffer(pem) {
+      const b64Lines = pem
+        .replace(/-----BEGIN PUBLIC KEY-----/, '')
+        .replace(/-----END PUBLIC KEY-----/, '')
+        .replace(/\s/g, '');
+      const binaryString = window.atob(b64Lines);
+      const len = binaryString.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
 
-    const fileInput = document.getElementById('fileInput');
-    const encryptButton = document.getElementById('encryptButton');
-    const statusDiv = document.getElementById('status');
+    async function importRsaPublicKey(pemKey) {
+      const arrayBuffer = pemToArrayBuffer(pemKey);
+      return window.crypto.subtle.importKey(
+        "spki",
+        arrayBuffer,
+        { name: "RSA-OAEP", hash: "SHA-256" },
+        true,
+        ["encrypt"]
+      );
+    }
 
-    encryptButton.addEventListener('click', async () => {
-      // Ensure a file is selected.
+    // Utility: Convert an ArrayBuffer to Base64 string
+    function arrayBufferToBase64(buffer) {
+      let binary = '';
+      const bytes = new Uint8Array(buffer);
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      return window.btoa(binary);
+    }
+
+    // Encryption process for the encrypt page
+    document.getElementById('encryptButton').addEventListener('click', async () => {
+      const statusDiv = document.getElementById('status');
+      const fileInput = document.getElementById('fileInput');
       if (!fileInput.files || fileInput.files.length === 0) {
         statusDiv.textContent = 'Please select a file to encrypt.';
         return;
       }
-
       const file = fileInput.files[0];
-      const reader = new FileReader();
+      try {
+        statusDiv.textContent = 'Encrypting... Please wait.';
+        
+        // Read file as ArrayBuffer (supports binary files)
+        const fileArrayBuffer = await file.arrayBuffer();
+        
+        // Generate a random AES-GCM key
+        const aesKey = await window.crypto.subtle.generateKey(
+          { name: "AES-GCM", length: 256 },
+          true,
+          ["encrypt", "decrypt"]
+        );
 
-      reader.onload = async (e) => {
-        const fileContent = e.target.result;
-        try {
-          statusDiv.textContent = 'Encrypting... Please wait.';
-          
-          // Read the provided public key.
-          const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });
-          
-          // Create a message from the file content.
-          const message = await openpgp.createMessage({ text: fileContent });
-          
-          // Encrypt the message using the public key.
-          const encrypted = await openpgp.encrypt({
-            message: message,
-            encryptionKeys: publicKey,
-            format: 'armored'
-          });
-          
-          // Create a Blob from the encrypted text.
-          const blob = new Blob([encrypted], { type: 'text/plain' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = file.name + '.pgp';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          statusDiv.textContent = 'Encryption complete! Your encrypted file has been downloaded.';
-        } catch (err) {
-          console.error(err);
-          statusDiv.textContent = 'Encryption failed. Check the console for details.';
-        }
-      };
+        // Export the raw AES key so we can encrypt it with RSA
+        const rawAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
 
-      reader.onerror = () => {
-        statusDiv.textContent = 'Error reading the file.';
-      };
+        // Generate a random IV (12 bytes recommended for AES-GCM)
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
 
-      // Read the file as text.
-      reader.readAsText(file);
+        // Encrypt the file with AES-GCM
+        const encryptedFileBuffer = await window.crypto.subtle.encrypt(
+          { name: "AES-GCM", iv },
+          aesKey,
+          fileArrayBuffer
+        );
+
+        // Import the RSA public key and encrypt the AES key with RSA-OAEP
+        const rsaPublicKey = await importRsaPublicKey(publicKeyPem);
+        const encryptedAesKeyBuffer = await window.crypto.subtle.encrypt(
+          { name: "RSA-OAEP" },
+          rsaPublicKey,
+          rawAesKey
+        );
+
+        // Base64 encode the encrypted AES key, IV, and ciphertext
+        const encryptedAesKeyB64 = arrayBufferToBase64(encryptedAesKeyBuffer);
+        const ivB64 = arrayBufferToBase64(iv.buffer);
+        const ciphertextB64 = arrayBufferToBase64(encryptedFileBuffer);
+
+        // Create a JSON payload with encryption results and file metadata
+        const payload = {
+          encryptedKey: encryptedAesKeyB64,
+          iv: ivB64,
+          ciphertext: ciphertextB64,
+          filename: file.name,
+          timestamp: new Date().toISOString()
+        };
+
+        // Convert payload to a formatted JSON string
+        const jsonStr = JSON.stringify(payload, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Trigger download of the encrypted file with a .pgp extension
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name + '.pgp';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        statusDiv.textContent = 'Encryption complete! Your encrypted file has been downloaded.';
+      } catch (err) {
+        console.error(err);
+        statusDiv.textContent = 'Encryption failed. Check the console for details.';
+      }
     });
   </script>
 </body>

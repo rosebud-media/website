@@ -49,53 +49,48 @@
           <strong>HTML or Markdown:</strong> We recommend creating articles as HTML files or Markdown (which can be converted to HTML). This format allows for rich content, including animated GIFs and interactive elements.
         </li>
         <li>
-          <strong>Exporting from Medium:</strong> If you write on Medium, consider using the browser extension <a href="https://chrome.google.com/webstore/detail/singlefile" target="_blank">SingleFile</a>. Select your article and export it so that it can then be imported to IPFS with its original formatting.
+          <strong>Exporting from Medium:</strong> If you write on Medium, consider using the browser extension <a href="https://chrome.google.com/webstore/detail/singlefile" target="_blank">SingleFile</a>. Export your article so that it retains its original formatting for IPFS upload.
         </li>
         <li>
-          <strong>Long Form Articles:</strong> For in-depth content, long-form HTML is preferred. However, if you choose to create a PDF, note that it will be static and won’t support animations.
+          <strong>Long Form Articles:</strong> For in-depth content, long-form HTML is preferred. Note that if you choose PDF, it will be static and won’t support animations.
         </li>
         <li>
-          <strong>Self-Contained Files:</strong> Aim to have all your images and styles embedded in the file. Tools like Pandoc (using the <code>--self-contained</code> flag) can help with this conversion.
+          <strong>Self-Contained Files:</strong> Aim to embed all images and styles within the file. Tools like Pandoc (using the <code>--self-contained</code> flag) can help.
         </li>
       </ul>
       <p>
-        By following these guidelines, you help ensure that your articles display correctly.
+        Following these guidelines ensures your articles display correctly on our platform.
       </p>
     </section>
 
     <section>
       <h2>How to Submit Articles</h2>
+      <p>We offer two flexible methods for submitting your articles while preserving your privacy:</p>
+      <ol>
+        <li>
+          <strong>Submission Form:</strong> Use our secure submission form. Your article is encrypted in your browser and then transmitted over the decentralized Matrix network to our processing system. We then retrieve, decrypt, and upload your article to IPFS while indexing it into the blog. Since our system does not directly handle your connection, we cannot see your IP address. (Note: The Matrix network does use IP addresses to connect nodes, so if privacy is a concern, consider using a VPN or Tor.)
+        </li>
+        <li>
+          <strong>Direct IPFS Upload:</strong> Alternatively, you can upload your article directly to IPFS using your preferred method or a hosted service (for example, <a href="https://pinata.cloud/" target="_blank">Pinata</a> or <a href="https://web3.storage/" target="_blank">web3.storage</a>). Once you obtain the file’s CID, submit the CID and required metadata using our dedicated submission form. If your article is encrypted (using our browser‑based encryption tool), we will decrypt it before publishing, ensuring no trace remains of you as the author.
+        </li>
+      </ol>
       <p>
-        We like to give flexibility to bloggers while protecting your privacy. Below are some tips for submitting your articles to the platform.
-      </p>
-      <ul>
-        <li>
-          <strong>Access IPFS:</strong> <a href="https://docs.ipfs.tech/install/ipfs-desktop/" target="_blank">Install IPFS</a> or create an account with a free IPFS host such as <a href="https://pinata.cloud/" target="_blank">Pinata</a> or <a href="https://web3.storage/" target="_blank">web3.storage</a>.
-        </li>
-        <li>
-          <strong>Upload file to IPFS:</strong> Using the local GUI if running locally or the dashboard if using a hosted service, select your file and import it. This will create a new CID code that identifies the file on the network.
-        </li>
-        <li>
-          <strong>Submit your CID:</strong> Email the completed post description using the template below to <a href="mailto:submissions@rosebud.world">submissions@rosebud.world</a>. Emails are deleted once the article is imported.
-        </li>
-      </ul>
-      <p>
-        This process will change to a more automated system over the coming weeks to remove the need for email while preserving privacy.
+        Once approved, articles are pinned on our IPFS node and listed <a href="articles.html">here</a>.
       </p>
       <p>
-        By following these guidelines, you help ensure that your articles remain accessible on IPFS.
+        <em>Note:</em> To help keep content online and censorship-resistant, feel free to pin any approved articles on your own IPFS node.
       </p>
     </section>
 
     <section>
       <h2>JSON Submission Template</h2>
-      <p>Use the following JSON template when submitting your article. Note that the title must not be more than 50 characters.</p>
+      <p>Use the following JSON template when submitting your article via our IPFS submission form. Note that the title must not exceed 50 characters.</p>
       <pre><code>{
   "title": "Block title",
   "cid": "cid code",
   "author": "Blogger handle",
   "date_approved": "Submission date (YYYY-MM-DD)",
-  "summary": "Summary of article to show in list",
+  "summary": "Summary of article for display",
   "tags": ["tag1", "tag2", "tag3"],
   "mature": false
 }</code></pre>
@@ -114,29 +109,22 @@
     <section>
       <h2>Custom URL &amp; Branding</h2>
       <p>
-        You can create a custom view of your articles by using URL parameters to automatically filter results and apply your custom branding. For example, appending the following query string to the URL:
+        You can create a custom view of your articles by using URL parameters to automatically filter results and apply your custom branding. For example, appending the query string:
       </p>
       <pre><code>?author=YourAuthorName&amp;brand=YourBrandName</code></pre>
       <p>
         will:
       </p>
       <ul>
-        <li>Automatically filter the articles to show only those written by <strong>YourAuthorName</strong>.</li>
-        <li>Load an external CSS file named <code>custom-YourBrandName.css</code> to apply your custom styling.</li>
+        <li>Filter articles to show only those written by <strong>YourAuthorName</strong>.</li>
+        <li>Load an external CSS file named <code>custom-YourBrandName.css</code> for custom styling.</li>
       </ul>
       <p>
-        To have your custom CSS included in the system:
+        To have your custom CSS included, either submit your custom CSS file via a pull request on our GitHub repository or follow our contribution guidelines.
       </p>
-      <ol>
-        <li>
-          Email your custom CSS file to <a href="mailto:branding@rosebud.world">branding@rosebud.world</a> with your desired brand name in the subject line.
-        </li>
-        <li>
-          Alternatively, submit a pull request on our GitHub repository with your custom CSS file and follow the contribution guidelines.
-        </li>
-      </ol>
-
-      For example, visit <a href="http://localhost:8000/articles.html?brand=thenewautonomy&author=TheNewAutonomy" target="_blank">here</a> to see a view filtering by the author thenewauthority specifying a custom css style.
+      <p>
+        For example, visit <a href="http://localhost:8000/articles.html?brand=thenewautonomy&amp;author=TheNewAutonomy" target="_blank">this link</a> to see a view filtering by author and applying custom styling.
+      </p>
     </section>
 
     <section>
@@ -150,7 +138,7 @@
       </p>
       <h3>In Branding &amp; Marketing</h3>
       <p>
-        If you have expertise in design, branding, or marketing, help us enhance the look and outreach of Rosebud World. Contribute ideas, custom branding assets, and promotional strategies. Please reach out via email or contribute via a GitHub pull request.
+        If you have expertise in design, branding, or marketing, help us enhance the look and outreach of Rosebud World. Contribute ideas, custom branding assets, and promotional strategies through GitHub or by contacting us.
       </p>
       <h3>As a Developer</h3>
       <p>
