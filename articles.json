@@ -1,4 +1,60 @@
 [
+
+
+  {
+    "title": "The Evolving Identity of a Mother",
+    "cid": "bafybeigdfvx3i7hko7nxt7kly3kj3f4ziv7s5kz65jw5wnrrxtqgzgwuby",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-18",
+    "summary": "Being a mother entails evolving and adapting parenting techniques as children grow andn change",
+    "tags": ["family", "parenting", "motherhood"],
+    "mature": false
+  },
+  {
+    "title": "Prevalence and Demographics: Research Limitations",
+    "cid": "bafybeifvhca7x4acgbwofyayhlbmdgt63o42dfb4mxoiahtfuhzi2wpmla",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-22",
+    "summary": "Research in the field of minor attraction has limitations due to the nature of the subject being researched",
+    "tags": ["academic", "research", "psycholody","health","science"],
+    "mature": false
+  },
+  {
+    "title": "Equitoria Tokenomics Document",
+    "cid": "bafybeieozu7ctcpfyal5qyjhgl5c4jv5nngwsrppklc5lkti2s4hq4y4tm",
+    "author": "Equitoria",
+    "date_approved": "2025-03-24",
+    "summary": "In this post we look at the economics of Equitoria",
+    "tags": ["economics", "tokenomics", "finance"],
+    "mature": false
+  },
+  {
+    "title": "The Reality of Mommy Burnout—and How to Recover",
+    "cid": "bafybeie5oet7g4h5b3qrmdkcr7afvo732nqxyxrfzn2lh7gwrzz3dulc6m",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-18",
+    "summary": "Being a mom is highly stressful and can learn to burn out. How can we best recover from burnout?",
+    "tags": ["family", "parenting", "motherhood"],
+    "mature": false
+  },
+  {
+    "title": "The Impact of Stigma and Mental Health Concerns",
+    "cid": "bafybeigsg3risjikfonaa5dqlag7njcxwqjicl7p3smonciz6okyhdsl4u",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-18",
+    "summary": "The stigma associated with sexual orientations has a real impact on mental health",
+    "tags": ["academic", "research", "psycholody","health","science"],
+    "mature": false
+  },
+  {
+    "title": "Strengthening Communities Through Family Values and Citizen Empowerment",
+    "cid": "bafybeickihcarqgbedjlrolpagoacw45rmh472bbxkcwuki7gzrwzy65fy",
+    "author": "Equitoria",
+    "date_approved": "2025-03-19",
+    "summary": "Citizen empowerment and local community focussed governance can help to shape positive, strong family values",
+    "tags": ["society", "culture", "vales", "family", "community"],
+    "mature": false
+  },
   {
     "title": "Progress Without Prosperity: How Modern Values Leave People Worse Off",
     "cid": "bafybeieqkq7vrghjg3k4vnmpmfy7bmcjx7ad42cvt6ueau2w3cl3nzjuei",
@@ -23,7 +79,7 @@
     "author": "MrsJHomeLife",
     "date_approved": "2025-03-15",
     "summary": "Parentng is hard. In this post we look at how to find the right balance between safety and freedom to have a  childhood",
-    "tags": ["academic", "research", "psycholody","health","science"],
+    "tags": ["family", "parenting", "motherhood"],
     "mature": false
   },
   {
@@ -63,7 +119,7 @@
     "mature": false
   },
   {
-    "title": "Developing Beyond Ethereum: A Developer’s Guide to Polygon, Base, Arbitrum, Optimism, and Linea",
+    "title": "Developing Beyond Ethereum: A Developers Guide to Polygon, Base, Arbitrum, Optimism, and Linea",
     "cid": "bafybeiemuuqxu5w7bv2jfglu3muigjglqcslwwpe62pbrsmmeeo3rjwhrq",
     "author": "TheNewAutonomy",
     "date_approved": "2025-03-11",
@@ -153,7 +209,7 @@
     "mature": false
   },
   {
-    "title": "Migrating from Ethereum to Solana: A Developer’s Guide",
+    "title": "Migrating from Ethereum to Solana: A Developers Guide",
     "cid": "bafybeibade3s7x566jxhbumy4jliodrrekuavzdas2wraehdecadxadvgi",
     "author": "TheNewAutonomy",
     "date_approved": "2025-03-11",
@@ -162,7 +218,7 @@
     "mature": false
   },
   {
-    "title": "Reimagining the Future: Commodore’s Continued Legacy in Tech",
+    "title": "Reimagining the Future: Commodores Continued Legacy in Tech",
     "cid": "bafybeihyovkizr46yodwmcnrey4ivpeyagfxbfuwqs5nbupt3yafytdy4u",
     "author": "TheNewAutonomy",
     "date_approved": "2025-03-11",
