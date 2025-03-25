@@ -1,6 +1,31 @@
 [
-
-
+  {
+    "title": "Teaching Financial Literacy to Kids",
+    "cid": "bafybeibc6kama5dj26ls4rfscnaief63zgohjw3yfop2baywis6tb4zie4",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-25",
+    "summary": "A look at how to teach kids financial responsibility to prepare for the future",
+    "tags": ["family", "parenting", "motherhood", "finance", "money"],
+    "mature": false
+  },
+  {
+    "title": "Media Representations vs. Scholarly Research",
+    "cid": "bafybeiegcrg4rvzpirpii4f73lbt4rfsoyze3pgcm46gvfnnddop7oscvq",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-25",
+    "summary": "A look at the difference between scholarly research and how the media portrays minor attraction",
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
+    "mature": false
+  },
+  {
+    "title": "Equitoria's constitution (draft)",
+    "cid": "bafybeiat7m3efxw4rvfhx4cbyyxv3qsboksbpknu3basn3numvlcmsavea",
+    "author": "Equitoria",
+    "date_approved": "2025-03-25",
+    "summary": "A draft copy version of Equitoria's constitution",
+    "tags": ["constitution", "governance", "society"],
+    "mature": false
+  },
   {
     "title": "The Evolving Identity of a Mother",
     "cid": "bafybeigdfvx3i7hko7nxt7kly3kj3f4ziv7s5kz65jw5wnrrxtqgzgwuby",
@@ -16,7 +41,7 @@
     "author": "DrEmmaPsych",
     "date_approved": "2025-03-22",
     "summary": "Research in the field of minor attraction has limitations due to the nature of the subject being researched",
-    "tags": ["academic", "research", "psycholody","health","science"],
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
     "mature": false
   },
   {
@@ -43,7 +68,7 @@
     "author": "DrEmmaPsych",
     "date_approved": "2025-03-18",
     "summary": "The stigma associated with sexual orientations has a real impact on mental health",
-    "tags": ["academic", "research", "psycholody","health","science"],
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
     "mature": false
   },
   {
@@ -97,7 +122,7 @@
     "author": "DrEmmaPsych",
     "date_approved": "2025-03-15",
     "summary": "The changing classification of Pedophilic Disorder over time through new research",
-    "tags": ["academic", "research", "psycholody","health","science"],
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
     "mature": false
   },
   {
@@ -110,64 +135,190 @@
     "mature": false
   },
   {
+    "title": "Introduction",
+    "cid": "bafybeid2rsaqgrhs5d3ut5667giksa76llnwnxu6mduohnyvp6kmqsx7om",
+    "author": "ModernMarriage",
+    "date_approved": "2025-03-11",
+    "summary": "An introduction to us and our blog",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
+    "title": "Finding Joy in the Ordinary Moments",
+    "cid": "bafybeih3f2ai5y3nlzvoaluj5zqr2arqdp4ynwwiel3gu556lvvnmewbde",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-11",
+    "summary": "Celebrating the small wins in life to create a more joyful life",
+    "tags": ["family", "parenting", "motherhood"],
+    "mature": false
+  },
+  {
+    "title": "Comparative Cross-Cultural Perspectives",
+    "cid": "bafybeicrg2bjcsoedbwyk7e6lesesqmrihw23ve7ghnnyhtnmsxopyaeee",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-10",
+    "summary": "A look at the differences between cultures in how minor attraction is viewed and treated",
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
+    "mature": false
+  },
+  {
     "title": "A beginners guide for choosing an Ethereum layer 2",
     "cid": "bafybeifl3jkzwoketvdcbu2v7hyr2v2vkkdpa3o7ssfyvjrgexh2nw2jne",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-03-07",
     "summary": "A look at popular layer two Ethereum networks to launch a project on",
     "tags": ["blockchain", "cryptocurrency", "ethereum", "polygon", "base","arbitrum","optimism","linea"],
+    "mature": false
+  },
+  {
+    "title": "How to Raise Confident Daughters (or Sons)",
+    "cid": "bafybeictkd677s65wayex4d3y3gup6r7wc7uwyyimgdrqqruq4x7rgrokm",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-06",
+    "summary": "As a parent we have a role to encourage confidence in our kids",
+    "tags": ["family", "parenting", "motherhood"],
+    "mature": false
+  },
+  {
+    "title": "Distinguishing Attraction from Behavior",
+    "cid": "bafybeia3xh5oi5jnauiuwc5cnawoe4egl65or5qlbe7anxvkazuviza3ge",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-06",
+    "summary": "How academia distinguishes between minor attraction and harmful behaviour",
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
     "mature": false
   },
   {
     "title": "Developing Beyond Ethereum: A Developers Guide to Polygon, Base, Arbitrum, Optimism, and Linea",
     "cid": "bafybeiemuuqxu5w7bv2jfglu3muigjglqcslwwpe62pbrsmmeeo3rjwhrq",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-03-06",
     "summary": "A developers guide for choosing the right layer two for your new dApp.",
     "tags": ["blockchain", "ethereum", "development", "Base", "Polygon", "Arbitrum", "Optimism", "Linea" ],
+    "mature": false
+  },
+  {
+    "title": "Why I Chose to Be a Cuckold",
+    "cid": "bafybeihhsjp6vm6xk5z6jes5igqnrkrws7p22k55hdczqbqbzdmi7bjkwi",
+    "author": "ModernMarriage",
+    "date_approved": "2025-03-06",
+    "summary": "A personal confession for why I chose to become a cuckold",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
+    "title": "Marriage After Kids: Keeping the Spark Alive",
+    "cid": "bafybeidjdbuo3jokyicq7qcxfbbk3bopappq7kghb2ewwnwgnacislvxri",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-03-06",
+    "summary": "Becoming a mother doesn't mean we have to stop being a woman in our marriage",
+    "tags": ["family", "parenting", "motherhood"],
+    "mature": false
+  },
+  {
+    "title": "Why I Chose to Be a Hotwife",
+    "cid": "bafybeiazgll2om237ngg2uj3q4piwh7nbuzxs4o42ikaptiyniqotsnhvy",
+    "author": "ModernMarriage",
+    "date_approved": "2025-03-02",
+    "summary": "A personal confession for why I chose to become a hotwife",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
+    "title": "Ethical and Legal Considerations in Research",
+    "cid": "bafybeigxislwgqlkp6ehiqgzk6my5y4grczdkonfqvdo5ymyfbemrvasia",
+    "author": "DrEmmaPsych",
+    "date_approved": "2025-03-01",
+    "summary": "Researching minor attraction comes with its own ethical and legal considerations for any researcher",
+    "tags": ["academic", "research", "psycholody","health","science","minor attraction"],
     "mature": false
   },
   {
     "title": "A crypto Animal Farm",
     "cid": "bafybeibdcxkgze6kmxk2kc6tz3tudgmyuzeg53lj2pzb6jtk3ii5jwm5sq",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-28",
     "summary": "A look at the risks of replacing one corrupt financial system with another",
     "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics" ],
+    "mature": false
+  },
+  {
+    "title": "Symbolism in the lifestyle",
+    "cid": "bafybeibpphv5xaamox5xruy47742p2hm366foenes6on2boemciecrbj5m",
+    "author": "ModernMarriage",
+    "date_approved": "2025-02-27",
+    "summary": "Cuckolding has many symbols associated to the lifestyle, here we look at some of the more common",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
+    "title": "Raising Community-Conscious Kids",
+    "cid": "bafybeidm3myewpe62mfeqizfgxkaczmbx3ohkcwowbc3intwtonusmotdq",
+    "author": "MrsJHomeLife",
+    "date_approved": "2025-02-23",
+    "summary": "A look at how to teach our kids to be part of the local community",
+    "tags": ["family", "parenting", "motherhood"],
     "mature": false
   },
   {
     "title": "AI Agent Token Value Challenges",
     "cid": "bafybeibwgwcfgmsbsjb3h25pjzf6aljqkiqydbagyc6lvov7d4zx2ainxa",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-23",
     "summary": "The challenges facing token value creation in AI Agent projects",
     "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Virtuals", "Eliza" ],
     "mature": false
   },
   {
+    "title": "Starting Slowly: How to Introduce Cuckolding to Your Marriage",
+    "cid": "bafybeigxd7yaf7alpealjhcxgc2yd3jrfqic7pe3p676ea6p6sqdeelclq",
+    "author": "ModernMarriage",
+    "date_approved": "2025-02-21",
+    "summary": "A look at getting started slowly and safely as a couple",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "AIs, AGIs and Bots as a user base",
     "cid": "bafybeihqazxi2z4ro3xbh3wwbkykqfm2jnqj4pwigwf76ohiro646hfe7q",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-19",
     "summary": "When AI agents are good paying customers",
     "tags": ["blockchain", "cryptocurrency", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Virtuals", "Eliza" ],
     "mature": false
   },
   {
+    "title": "The Benefits of Cuckold Marriages and Consensual Non-Monogamy： What Research Shows",
+    "cid": "bafybeigtxsgsid45enx6lpl7guy5hsjp5vgaxfup3l54lcsfsqpbw56hhm",
+    "author": "ModernMarriage",
+    "date_approved": "2025-02-18",
+    "summary": "A look at what academic research shows about this lifestyle",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "An Introduction to Character Building for the Eliza AI Agent System",
     "cid": "bafybeicmowbtzhin44z4zjp3pzaah7btgacon6clgbkszhuwvkjqbegfm4",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-11",
     "summary": "A guide to character building in the Eliza AI system",
     "tags": ["blockchain", "ethereum", "tokenomics", "ai", "Artificial-intelligance", "Eliza" ],
     "mature": false
   },
   {
+    "title": "The Emotional Benefits of Cuckolding： How It Can Strengthen Your Marriage",
+    "cid": "bafybeieo4gq6oxwfqwdw3qdi36fbt36kchikpxk4ecfrqjeytv2ka5w34i",
+    "author": "ModernMarriage",
+    "date_approved": "2025-02-10",
+    "summary": "Couples in the lifestyle often talk about the benefits to the couple, but what are they?",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "Running Your Custom AI Agent Built with Eliza",
     "cid": "bafybeidzr65zts6pcx2wwml4maxpk42mouxfzji2fqb53wzquqtx7a6e2m",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-08",
     "summary": "Building and running a new AI agent using the Eliza AI agent framework",
     "tags": ["blockchain", "ethereum", "development", "tokenomics" ],
     "mature": false
@@ -176,16 +327,25 @@
     "title": "Applying value flow to an AMM",
     "cid": "bafybeica77edssooqjdchtgqyfrgbjtdoagbfbsb2h5jtce44xbdcpfqpy",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-05",
     "summary": "Thinking through how to create value flow in an AMM",
     "tags": ["blockchain", "ethereum", "tokenomics", "DeFi" ],
     "mature": false
   },
   {
+    "title": "The Role of the Bull: Understanding the Third Party in the Cuckold Lifestyle",
+    "cid": "bafybeicwyjyvflrt4ypebzznj4cjcmh3sw57d53l7f4ztenhys2e7xrtsa",
+    "author": "ModernMarriage",
+    "date_approved": "2025-02-04",
+    "summary": "A look at the role of a bull in relation to the couple",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "Bringing your USD-Collateralized Stablecoin to Linea: A Guide for Developers",
     "cid": "bafybeidwzjn2py2qck6knkskbc2mnm4rs6nfnekxk4jetmggmj2zwzbhg4",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-01",
     "summary": "Linea is the new ZK network from Consensys. Here we look at building a stable coin for the network.",
     "tags": ["blockchain", "ethereum", "tokenomics", "Linea" ],
     "mature": false
@@ -194,16 +354,25 @@
     "title": "Equitoria: A New Vision for Decentralized Governance and Equality",
     "cid": "bafybeihpt6sm3mfrysa43llumsr5muzz37bv4mxtbo5ckn4fyxriiudxhu",
     "author": "Equitoria",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-02-01",
     "summary": "An introduction to the new digital city state of Equitoria.",
     "tags": ["politics", "society", "culture", "economics", "constitution" ],
     "mature": false
   },
   {
+    "title": "The Spiritual Side of Cuckolding： Can It Fit Into a Faith-Based Relationship?",
+    "cid": "bafybeid2ckdtuxidda4o7nyktdgdx2lbti4aq3sixani2p6e34uql52qne",
+    "author": "ModernMarriage",
+    "date_approved": "2025-01-28",
+    "summary": "A look at cuckolding from a Christian couples perspective",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "Transitioning from Ethereum to Solana: A Guide for Users",
     "cid": "bafybeigfobnnd2q3wgwt3tl5c75e5rulghze5qowrsakkdobceydtyj6vq",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-28",
     "summary": "A user guide for becoming familiar with Solana for someone familiar with Ethereum",
     "tags": ["blockchain", "ethereum", "solana" ],
     "mature": false
@@ -212,16 +381,43 @@
     "title": "Migrating from Ethereum to Solana: A Developers Guide",
     "cid": "bafybeibade3s7x566jxhbumy4jliodrrekuavzdas2wraehdecadxadvgi",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-25",
     "summary": "A migration path for developers moving to Solana's Rust based network",
     "tags": ["blockchain", "ethereum", "development", "solana" ],
     "mature": false
   },
   {
+    "title": "Cuckolding for Couples in Long-Term Relationships: Rekindling Passion and Intimacy",
+    "cid": "bafybeihqdew7dgestvrkpkjq4akz3vw643lpv7dehrdsts7pazvv7val4i",
+    "author": "ModernMarriage",
+    "date_approved": "2025-01-25",
+    "summary": "Rekindling passion and intimacy for a couple through the enjoyment of cuckolding",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
+    "title": "A Vision for a Fair and Anonymous Justice System",
+    "cid": "bafybeiak5xl7wd4l6snwh4t4gqrbvexd6jir33kayukmpqw3u7n7tf6mhe",
+    "author": "Equitoria",
+    "date_approved": "2025-01-22",
+    "summary": "In this post we look at what a justice system would look like in Equitoria",
+    "tags": ["justice", "law"],
+    "mature": false
+  },
+  {
+    "title": "Cuckold Marriage, Faith, and the Five Love Languages: Finding Harmony Through Openness and Trust",
+    "cid": "bafybeig5xe4tbwdvwgmhmbdy7icxqiq24z3mxjeceyskmce7cdcmgigraa",
+    "author": "ModernMarriage",
+    "date_approved": "2025-01-22",
+    "summary": "A look at the five love languages through the lens of a cuckold marriage",
+    "tags": ["cuckold", "hotwife", "swinging", "marriage", "love"],
+    "mature": true
+  },
+  {
     "title": "Reimagining the Future: Commodores Continued Legacy in Tech",
     "cid": "bafybeihyovkizr46yodwmcnrey4ivpeyagfxbfuwqs5nbupt3yafytdy4u",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-21",
     "summary": "What would the world of technology look like if Commodore was still around?",
     "tags": ["commodore", "amiga", "retro", "retro-computing" ],
     "mature": false
@@ -230,7 +426,7 @@
     "title": "Rethinking tokenomics",
     "cid": "bafybeibly7fhgx2ncfts7xsjq44mz6wgvjm37tyoin3334sr5bfpi2os4y",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-18",
     "summary": "A new look at building good tokenomics for a blockchain project",
     "tags": ["blockchain", "ethereum", "development", "tokenomics" ],
     "mature": false
@@ -239,7 +435,7 @@
     "title": "Startup Web3 project economics",
     "cid": "bafybeiapufdae4wss7hbd2wmjr44txk6rfjnhbeuawe4ez7n7pcfzdgm6a",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-15",
     "summary": "Beyond tokenomics, a look at a healthy economics model for blockchain projects",
     "tags": ["blockchain", "ethereum", "development", "tokenomics" ],
     "mature": false
@@ -248,7 +444,7 @@
     "title": "Virtuals AI Agent protocol",
     "cid": "bafybeiarffk72fjp7fyvacr2hhltkiiia6h2wlg7xmiwfmwvvxmobd4evi",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-12",
     "summary": "A developer and user guide to building AI agents for the Virtuals framework",
     "tags": ["blockchain", "ethereum", "ai", "artificial-intelligence" ],
     "mature": false
@@ -257,7 +453,7 @@
     "title": "Why D&D Enthusiasts Make Epic Scrum Teams",
     "cid": "bafybeiadoue3nhvxlexlmxb5aelfaopcg4xqpt44fultumrgqctf323skq",
     "author": "TheNewAutonomy",
-    "date_approved": "2025-03-11",
+    "date_approved": "2025-01-08",
     "summary": "Running a scrum like an epic DnD Dungeon Master",
     "tags": ["scrum", "agile", "development", "project-management" ],
     "mature": false
