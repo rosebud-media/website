@@ -52,6 +52,11 @@ nav a:hover {
   text-decoration: underline;
 }
 
+nav a.underline-bold {
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
 /* Main Content */
 main {
   padding: 1.5rem;

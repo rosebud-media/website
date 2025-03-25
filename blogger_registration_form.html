@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blogger Registration</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #statusMessage {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    /* Read-only textareas for keys */
+    textarea[readonly] {
+      background-color: #f9f9f9;
+    }
+    .key-info {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blogger Registration Form</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="articles.html">Articles</a> |
+      <a href="guidelines.html">Guidelines</a> |
+      <a href="ipfs.html">IPFS</a> |
+      <a href="submit.html">Submit</a> |
+      <a href="blogger_registration_form.html" class="underline-bold">Registration</a> |
+      <a href="encrypt.html">Encrypt</a>
+    </nav>
+    <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Optional: Cache control (not fully guaranteed) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- Open Graph for social previews (optional) -->
+    <meta property="og:title" content="Rosebud World" />
+    <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
+    <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
+    <meta property="og:url" content="https://rosebud.world" />
+
+    <!-- Twitter Card (optional) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rosebud World" />
+    <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
+    <meta name="twitter:image" content="https://rosebud.world/images/preview.jpg" />
+  </header>
+  
+  <main>
+    <section>
+      <div class="form-container">
+        <form id="bloggerForm">
+          <div class="form-group">
+            <label>Username: 
+              <input type="text" name="username" required />
+            </label>
+          </div>
+          <!-- Public key is now generated automatically -->
+          <div class="form-group">
+            <label>Your Public Key:</label>
+            <textarea id="generatedPubKey" readonly required></textarea>
+          </div>
+          <div class="key-info">
+            Your public key has been auto-generated. It will be submitted as part of your profile.
+          </div>
+          <div class="form-group">
+            <label>Backup Your Private Key (save this somewhere safe):
+              <textarea id="backupPrivKey" readonly required></textarea>
+            </label>
+          </div>
+          <div class="key-info">
+            Your private key is shown above for backup purposes only. It is also stored locally in your browser.
+          </div>
+          <div class="form-group">
+            <label>Bio:
+              <textarea name="bio" rows="3"></textarea>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Profile Picture (URL or IPFS):
+              <input type="text" name="profile_pic" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Twitter:
+              <input type="text" name="twitter" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Nostr:
+              <input type="text" name="nostr" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Mastodon:
+              <input type="text" name="mastodon" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>BTC Wallet:
+              <input type="text" name="btc" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>ETH Wallet:
+              <input type="text" name="eth" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>SOL Wallet:
+              <input type="text" name="sol" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>XMR Wallet:
+              <input type="text" name="xmr" />
+            </label>
+          </div>
+          <div class="form-group">
+            <label>ZEC Wallet:
+              <input type="text" name="zec" />
+            </label>
+          </div>
+          <div class="form-group">
+            <button type="submit">Submit Blogger Profile</button>
+          </div>
+        </form>
+        <p id="statusMessage"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://libraries.projects.cavi.au.dk/javascript/matrix-js-sdk/23.2.0/browser-matrix.min.js"></script>
+  <script src="libs/olm.js"></script>
+
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Initialize Olm
+      if (typeof Olm === "undefined") {
+        console.error("Olm library failed to load.");
+        return;
+      }
+      await Olm.init();
+      console.log("Olm initialized.");
+
+      // --- Key Pair Generation ---
+      // Generate a key pair for the blogger (RSASSA-PKCS1-v1_5 with SHA-256)
+      const keyPair = await window.crypto.subtle.generateKey(
+        {
+          name: "RSASSA-PKCS1-v1_5",
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: "SHA-256"
+        },
+        true,
+        ["sign", "verify"]
+      );
+      
+      // Export the public key as a JWK
+      const publicKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.publicKey);
+      // Export the private key as a JWK (for backup)
+      const privateKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.privateKey);
+      
+      // Convert JWK objects to strings for display
+      const publicKeyString = JSON.stringify(publicKeyJwk, null, 2);
+      const privateKeyString = JSON.stringify(privateKeyJwk, null, 2);
+      
+      // Set the values in the read-only textareas
+      document.getElementById("generatedPubKey").value = publicKeyString;
+      document.getElementById("backupPrivKey").value = privateKeyString;
+      
+      // Save the private key backup to localStorage for later use (e.g., for signing submissions)
+      localStorage.setItem("userPrivateKey", privateKeyString);
+      
+      // --- Matrix Client Setup ---
+      const homeserverUrl = "https://matrix.org";
+      const userId = "@rosebud1:matrix.org";
+      const accessToken = "syt_cm9zZWJ1ZDE_paIOyAvfPWeGbPsbtzrI_0bDq7k";
+      const bloggerRoomId = "!IfayqEDzJhwGSTvAZO:matrix.org"; // replace with actual room ID
+
+      const matrixClient = matrixcs.createClient({
+        baseUrl: homeserverUrl,
+        accessToken,
+        userId,
+        deviceId: "rosebud_blogger_client"
+      });
+
+      await matrixClient.initCrypto();
+      matrixClient.startClient({ initialSyncLimit: 10 });
+
+      matrixClient.once("sync", (state) => {
+        if (state === "PREPARED") {
+          console.log("Matrix client ready.");
+          enableFormSubmission(matrixClient, publicKeyJwk);
+        }
+      });
+
+      function enableFormSubmission(client, pubkey) {
+        const form = document.getElementById("bloggerForm");
+        const statusMessage = document.getElementById("statusMessage");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          statusMessage.textContent = "Submitting...";
+
+          // Get form data (excluding public key, which is auto-generated)
+          const formData = Object.fromEntries(new FormData(form).entries());
+          // Build the submission object, including the auto-generated public key
+          const submission = {
+            username: formData.username,
+            pubkey: pubkey, // use the generated public key (as a JWK object)
+            bio: formData.bio,
+            profile_pic: formData.profile_pic,
+            socials: {
+              twitter: formData.twitter,
+              nostr: formData.nostr,
+              mastodon: formData.mastodon
+            },
+            wallets: {
+              btc: formData.btc,
+              eth: formData.eth,
+              sol: formData.sol,
+              xmr: formData.xmr,
+              zec: formData.zec
+            },
+            last_updated: new Date().toISOString()
+          };
+
+          try {
+            await client.sendEvent(bloggerRoomId, "m.room.message", {
+              msgtype: "m.text",
+              body: "New Blogger Registration Submission",
+              "rosebud:blogger_submission": submission
+            });
+            statusMessage.textContent = "Submitted successfully!";
+            form.reset();
+          } catch (err) {
+            console.error(err);
+            statusMessage.textContent = "Submission failed: " + err.message;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

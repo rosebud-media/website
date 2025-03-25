@@ -66,8 +66,10 @@
       <a href="index.html">Home</a> |
       <a href="articles.html">Articles</a> |
       <a href="guidelines.html">Guidelines</a> |
-      <a href="encrypt.html">Encrypt</a> |
-      <a href="submit.html">Submit</a>
+      <a href="ipfs.html">IPFS</a> |
+      <a href="submit.html" class="underline-bold">Submit</a> |
+      <a href="blogger_registration_form.html">Registration</a> |
+      <a href="encrypt.html">Encrypt</a>
     </nav>
     <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
     <meta name="robots" content="index, follow" />
@@ -167,7 +169,7 @@
     });
   </script>
 
-  <!-- Main Script: Matrix client initialization and form submission with encryption -->
+  <!-- Main Script: Matrix client initialization and form submission with encryption and conditional signing -->
   <script type="module">
     // Make Olm globally available
     window.Olm = Olm;
@@ -233,6 +235,7 @@
     });
 
     // --- Public Key for RSA Encryption ---
+    // This is the server’s RSA public key used to encrypt the AES key.
     const publicKeyPem = `
 -----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAoruF2EMJBLz0rmSfk0Mp
@@ -282,45 +285,70 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
           const file = fileInput.files[0];
           const fileArrayBuffer = await file.arrayBuffer();
 
+          // --- Conditional Signing of the File ---
+          // Check for a locally saved private key (from blogger registration)
+          let signatureB64 = "";
+          let signingPublicKey = null;
+          const storedPrivateKeyJwk = localStorage.getItem("userPrivateKey");
+          if (storedPrivateKeyJwk) {
+            // Import the stored private key (assumed to be in JWK format)
+            const userPrivateKey = await window.crypto.subtle.importKey(
+              "jwk",
+              JSON.parse(storedPrivateKeyJwk),
+              { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+              false,
+              ["sign"]
+            );
+            // Sign the plaintext file
+            const signatureBuffer = await window.crypto.subtle.sign(
+              { name: "RSASSA-PKCS1-v1_5" },
+              userPrivateKey,
+              fileArrayBuffer
+            );
+            signatureB64 = arrayBufferToBase64(signatureBuffer);
+            // Retrieve the associated public key (assumed saved during registration)
+            const storedPublicKeyJwk = localStorage.getItem("userPublicKey");
+            if (storedPublicKeyJwk) {
+              signingPublicKey = JSON.parse(storedPublicKeyJwk);
+            }
+          } else {
+            console.log("No stored private key found. Skipping digital signature.");
+          }
+
+          // --- Encryption of the File ---
           // Generate a random AES-GCM key
           const aesKey = await window.crypto.subtle.generateKey(
             { name: "AES-GCM", length: 256 },
             true,
             ["encrypt", "decrypt"]
           );
-
           // Export the raw AES key so we can encrypt it with RSA
           const rawAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
-
           // Generate a random IV (12 bytes recommended for AES-GCM)
           const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
           // Encrypt the file with AES-GCM
           const encryptedFileBuffer = await window.crypto.subtle.encrypt(
             { name: "AES-GCM", iv },
             aesKey,
             fileArrayBuffer
           );
-
           // Convert the ciphertext into a Blob for uploading
           const ciphertextBlob = new Blob([encryptedFileBuffer], { type: "application/octet-stream" });
 
           // Upload the encrypted file to the Matrix content repository
-          // rawResponse: false typically returns a string like "mxc://matrix.org/abc123"
           const uploadResult = await matrixClient.uploadContent(ciphertextBlob, {
             name: file.name,
             type: "application/octet-stream",
             rawResponse: false
           });
-
           console.log("uploadResult:", uploadResult);
 
-          // Derive the actual mxc URI (string) from the uploadResult
+          // Derive the actual mxc URI from the uploadResult
           let mxcUri;
           if (typeof uploadResult === "string") {
-            mxcUri = uploadResult;  // e.g. "mxc://matrix.org/abc123"
+            mxcUri = uploadResult;
           } else if (uploadResult && uploadResult.content_uri) {
-            mxcUri = uploadResult.content_uri; // e.g. { content_uri: "mxc://..." }
+            mxcUri = uploadResult.content_uri;
           } else {
             throw new Error("No valid MXC URI returned from uploadContent");
           }
@@ -332,42 +360,43 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
             rsaPublicKey,
             rawAesKey
           );
-
           // Convert the encrypted AES key and IV to Base64
           const encryptedAesKeyB64 = arrayBufferToBase64(encryptedAesKeyBuffer);
           const ivB64 = arrayBufferToBase64(iv.buffer);
 
-          // Prepare a standard "m.file" event so the file appears as an attachment
-          // We'll store your metadata and encryption info in custom fields.
+          // Prepare the event content.
+          // Include signature and signingPublicKey only if a signature was produced.
+          const metadata = {
+            title,
+            author,
+            dateApproved,
+            summary,
+            tags,
+            mature,
+            originalFilename: file.name,
+            timestamp: new Date().toISOString()
+          };
+          if (signatureB64 && signingPublicKey) {
+            metadata.signature = signatureB64;
+            metadata.signingPublicKey = signingPublicKey;
+          }
+
           const content = {
             msgtype: "m.file",
-            // The user will see this name in the room
             body: file.name + " (encrypted)",
-            url: mxcUri,  // Must be a valid "mxc://..." string
+            url: mxcUri,
             info: {
-              // Basic file info for the client
               size: ciphertextBlob.size,
               mimetype: "application/octet-stream"
             },
-            // Custom fields to store your metadata
-            "rosebud:metadata": {
-              title,
-              author,
-              dateApproved,
-              summary,
-              tags,
-              mature,
-              originalFilename: file.name,
-              timestamp: new Date().toISOString()
-            },
-            // Store your encryption details
+            "rosebud:metadata": metadata,
             "rosebud:encryption": {
               encryptedKey: encryptedAesKeyB64,
               iv: ivB64
             }
           };
 
-          // Send the "m.file" event to the room
+          // Send the event to the room
           await matrixClient.sendEvent(roomId, "m.room.message", content);
 
           statusMessage.innerText = "Submission successful!";
