@@ -5,6 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encrypt Article for IPFS | Rosebud World</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* (Your existing CSS styles remain unchanged) */
+    /* Additional styles for the new submission form */
+    .form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button[type="submit"],
+    button[type="button"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #status, #recordStatus {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    /* Read-only textareas for keys */
+    textarea[readonly] {
+      background-color: #f9f9f9;
+    }
+    .key-info {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -20,19 +73,13 @@
     </nav>
     <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
     <meta name="robots" content="index, follow" />
-
-    <!-- Optional: Cache control (not fully guaranteed) -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-
-    <!-- Open Graph for social previews (optional) -->
     <meta property="og:title" content="Rosebud World" />
     <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
     <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
     <meta property="og:url" content="https://rosebud.world" />
-
-    <!-- Twitter Card (optional) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Rosebud World" />
     <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
@@ -40,10 +87,11 @@
   </header>
 
   <main>
+    <!-- Section 1: Encryption -->
     <section>
       <h2>Instructions</h2>
       <p>
-        Use this tool to encrypt your article file before uploading it to IPFS.
+        Use this tool to encrypt your article file before uploading it to IPFS <b>only</b> if your intention is for Rosebud to re-add to IPFS as a new file with no link back to you as the original IPFS uploader.
         Your file will be encrypted in your browser using AES‑GCM, and the AES key will be RSA‑encrypted using our public key.
         The resulting JSON file (with extension <code>.pgp</code>) contains all the encryption data needed.
       </p>
@@ -60,12 +108,67 @@
       <button id="encryptButton">Encrypt and Download</button>
       <div id="status"></div>
     </section>
+
+    <!-- Section 2: Submit Encrypted Article Record (with IPFS CID) -->
+    <section>
+      <h2>Submit Article Record</h2>
+      <p>
+        Once your file is uploaded to IPFS and you have its CID, use the form below to submit your article record via our Matrix channel from where it will be retrieved, reviewed and indexed
+      </p>
+      <p>
+        Note that if file on IPFS is not encrypted then it will be pinned rather than uploaded as a new file.
+      </p>
+      <div class="form-container">
+        <form id="recordForm">
+          <div class="form-group">
+            <label for="recordTitle">Title (max 50 characters):</label>
+            <input type="text" id="recordTitle" name="title" maxlength="50" placeholder="Article title" required />
+          </div>
+          <div class="form-group">
+            <label for="recordAuthor">Author Handle:</label>
+            <input type="text" id="recordAuthor" name="author" placeholder="Your handle" required />
+          </div>
+          <div class="form-group">
+            <label for="recordDate">Submission Date:</label>
+            <input type="date" id="recordDate" name="date_approved" required />
+          </div>
+          <div class="form-group">
+            <label for="recordSummary">Summary:</label>
+            <textarea id="recordSummary" name="summary" rows="3" placeholder="A brief summary" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="recordTags">Tags (comma-separated):</label>
+            <input type="text" id="recordTags" name="tags" placeholder="e.g. blockchain, free-speech" />
+          </div>
+          <div class="form-group">
+            <label for="recordMature">Mature Content:</label>
+            <select id="recordMature" name="mature">
+              <option value="false" selected>No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="recordCID">IPFS CID:</label>
+            <input type="text" id="recordCID" name="cid" placeholder="e.g. Qm..." required />
+          </div>
+          <div class="form-group">
+            <button type="submit">Submit Encrypted Record</button>
+          </div>
+        </form>
+        <div id="recordStatus"></div>
+      </div>
+    </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Rosebud World</p>
   </footer>
 
+  <!-- Include Matrix JS SDK and Olm -->
+  <script src="https://libraries.projects.cavi.au.dk/javascript/matrix-js-sdk/23.2.0/browser-matrix.min.js"></script>
+  <script src="libs/olm.js"></script>
+
+  <!-- Encryption Script -->
   <script>
     // RSA public key in SPKI format (same as used in submit.html)
     const publicKeyPem = `
@@ -85,12 +188,11 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
 -----END PUBLIC KEY-----
 `;
 
-    // Utility: Convert PEM string to an ArrayBuffer
+    // Utility: Convert PEM to ArrayBuffer
     function pemToArrayBuffer(pem) {
-      const b64Lines = pem
-        .replace(/-----BEGIN PUBLIC KEY-----/, '')
-        .replace(/-----END PUBLIC KEY-----/, '')
-        .replace(/\s/g, '');
+      const b64Lines = pem.replace(/-----BEGIN PUBLIC KEY-----/, '')
+                           .replace(/-----END PUBLIC KEY-----/, '')
+                           .replace(/\s/g, '');
       const binaryString = window.atob(b64Lines);
       const len = binaryString.length;
       const bytes = new Uint8Array(len);
@@ -111,7 +213,7 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
       );
     }
 
-    // Utility: Convert an ArrayBuffer to Base64 string
+    // Utility: Convert ArrayBuffer to Base64
     function arrayBufferToBase64(buffer) {
       let binary = '';
       const bytes = new Uint8Array(buffer);
@@ -121,7 +223,7 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
       return window.btoa(binary);
     }
 
-    // Encryption process for the encrypt page
+    // Encryption process for the encrypt section
     document.getElementById('encryptButton').addEventListener('click', async () => {
       const statusDiv = document.getElementById('status');
       const fileInput = document.getElementById('fileInput');
@@ -132,44 +234,28 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
       const file = fileInput.files[0];
       try {
         statusDiv.textContent = 'Encrypting... Please wait.';
-        
-        // Read file as ArrayBuffer (supports binary files)
         const fileArrayBuffer = await file.arrayBuffer();
-        
-        // Generate a random AES-GCM key
         const aesKey = await window.crypto.subtle.generateKey(
           { name: "AES-GCM", length: 256 },
           true,
           ["encrypt", "decrypt"]
         );
-
-        // Export the raw AES key so we can encrypt it with RSA
         const rawAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
-
-        // Generate a random IV (12 bytes recommended for AES-GCM)
         const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-        // Encrypt the file with AES-GCM
         const encryptedFileBuffer = await window.crypto.subtle.encrypt(
           { name: "AES-GCM", iv },
           aesKey,
           fileArrayBuffer
         );
-
-        // Import the RSA public key and encrypt the AES key with RSA-OAEP
         const rsaPublicKey = await importRsaPublicKey(publicKeyPem);
         const encryptedAesKeyBuffer = await window.crypto.subtle.encrypt(
           { name: "RSA-OAEP" },
           rsaPublicKey,
           rawAesKey
         );
-
-        // Base64 encode the encrypted AES key, IV, and ciphertext
         const encryptedAesKeyB64 = arrayBufferToBase64(encryptedAesKeyBuffer);
         const ivB64 = arrayBufferToBase64(iv.buffer);
         const ciphertextB64 = arrayBufferToBase64(encryptedFileBuffer);
-
-        // Create a JSON payload with encryption results and file metadata
         const payload = {
           encryptedKey: encryptedAesKeyB64,
           iv: ivB64,
@@ -177,13 +263,9 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
           filename: file.name,
           timestamp: new Date().toISOString()
         };
-
-        // Convert payload to a formatted JSON string
         const jsonStr = JSON.stringify(payload, null, 2);
         const blob = new Blob([jsonStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        
-        // Trigger download of the encrypted file with a .pgp extension
         const a = document.createElement('a');
         a.href = url;
         a.download = file.name + '.pgp';
@@ -191,13 +273,90 @@ gXK8yXbijE2haZTOgwHJQGkCAwEAAQ==
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-
         statusDiv.textContent = 'Encryption complete! Your encrypted file has been downloaded.';
       } catch (err) {
         console.error(err);
         statusDiv.textContent = 'Encryption failed. Check the console for details.';
       }
     });
+  </script>
+
+  <!-- Matrix Submission Script for Encrypted Record with IPFS CID -->
+  <script type="module">
+    // Use the Matrix JS SDK available as matrixcs
+    // Configuration for Matrix client (update these values as needed)
+    const homeserverUrl = "https://matrix.org";
+    const userId = "@rosebud1:matrix.org";
+    const accessToken = "syt_cm9zZWJ1ZDE_paIOyAvfPWeGbPsbtzrI_0bDq7k";
+    const submissionRoomId = "!ODNUAEmglvprqcKWAd:matrix.org"; // Room for encrypted records
+    const deviceId = "rosebud_ipfs_client";
+
+    const matrixClient = matrixcs.createClient({
+      baseUrl: homeserverUrl,
+      accessToken,
+      userId,
+      deviceId
+    });
+
+    // Optional: Define a simple filter to avoid server-side filter creation issues.
+    const filterDefinition = {
+      event_format: "client",
+      room: {
+        timeline: {
+          limit: 10
+        }
+      }
+    };
+    const myFilter = { getDefinition: () => filterDefinition };
+
+    // Start the Matrix client with the filter.
+    matrixClient.startClient({
+      initialSyncLimit: 10,
+      filter: myFilter
+    });
+
+    matrixClient.once("sync", (state) => {
+      if (state === "PREPARED") {
+        console.log("Matrix client is synced and ready for record submission.");
+        enableRecordSubmission(matrixClient);
+      }
+    });
+
+    function enableRecordSubmission(client) {
+      const form = document.getElementById("recordForm");
+      const statusDiv = document.getElementById("recordStatus");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        statusDiv.textContent = "Submitting record...";
+        const formData = Object.fromEntries(new FormData(form).entries());
+        // Build the submission object (similar fields to submit.html, but with a CID)
+        const submission = {
+          title: formData.title,
+          author: formData.author,
+          dateApproved: formData.date_approved,
+          summary: formData.summary,
+          tags: formData.tags.split(",").map(t => t.trim()).filter(t => t !== ""),
+          mature: formData.mature === "true",
+          cid: formData.cid, // IPFS CID provided by the user
+          timestamp: new Date().toISOString()
+        };
+        // Prepare the event content.
+        const content = {
+          msgtype: "m.file",
+          body: submission.title + " (IPFS encrypted article)",
+          // Instead of a file URL, we include the IPFS CID in our custom field.
+          "rosebud:metadata": submission
+        };
+        try {
+          await client.sendEvent(submissionRoomId, "m.room.message", content);
+          statusDiv.textContent = "Record submitted successfully!";
+          form.reset();
+        } catch (err) {
+          console.error("Record submission failed:", err);
+          statusDiv.textContent = "Record submission failed: " + err.message;
+        }
+      });
+    }
   </script>
 </body>
 </html>

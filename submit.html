@@ -95,11 +95,21 @@
   <main>
     <section>
       <h2>Submission Workflow</h2>
-      <p>
-        Fill out the form below. Your article and its metadata will be <strong>encrypted in your browser</strong> and uploaded as ciphertext to the Matrix content repository. 
-        We then send a standard <code>m.file</code> event so that the file appears as an attachment in the room. 
-        Because it’s encrypted, Element may call it “Invalid file,” but you can still download it. 
-        Decryption requires the RSA‑encrypted AES key from the event.
+        <p>
+          Fill out the form below. Your article will be <strong>encrypted in your browser</strong> and if you have an account registered, the article will also be signed with your private key.
+        </p>
+        <p style="color: red; font-weight: bold;">
+          If you have not done so already, we strongly advise you to <a href="blogger_registration_form.html">register</a> even if you plan to post anonymously. Registering requires no Personal Identifiable Information (PII) but ensures that no one can later
+          post under your handle. Once a post has been made against a handle that isn't registered, no one can later register that handle. This ensures that if you truly intend to post using a handle that isn't registered,
+          no one can later hijack that identity as a registered blogger.
+        </p>
+
+        Once submitted, the article is uploaded to a Matrix channel maintained by the Rosebud team. A service maintained by the Rosebud team on private computers then retrieves the post and decrypts it ready for review.
+        The review process entails a brief check for illegal images to protect the Rosebud service and its other members. Once checked, the article is added to the blog index.
+
+        <p style="font-weight: bold;">
+          Note: This submission process exists so that the Rosebud team has no way to access your IP address or learn anything about you that you don't put in your registration, to allow truly anonymous blogging.
+        </p>
       </p>
     </section>
 

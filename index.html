@@ -76,21 +76,41 @@
       </ul>
     </section>
 
+    <section id="registration">
+      <h2>Why register?</h2>
+      <p>
+        Registration is optional but we strongly recommend that you register even if you plan to blog entirely anonymously
+      </p>
+      <p>
+        If you submit a blog post without registering then your blog submission will be treated the same as if it was submitted by a registered user and will be indexed the same way.
+      </p>
+      <p>
+        However, someone else could later submit another blog post under the same blogger handle and we would have no way to know if that post came from you or not, and so it would also be checked and indexed.
+      </p>
+      <p>
+        This means that someone hostile to you could post fake posts under your blogger handle to discredit you. Registering ensures only you can submit posts under your handle without requiring any personal information in the registration process.
+      </p>
+      <p>
+        One an article has been submitted under an unregistered blogger handle we do not allow that handle to be registered later. This ensures that a hostile user cannot register using the handle of an unregistered user to effectively hijack his blogger handle.
+      </p>
+    </section>
+
     <section id="submission">
       <h2>How to Submit Articles</h2>
       <p>We currently accept submissions in one of two ways:</p>
       <ol>
         <li>
-          <strong>Submission Form:</strong> Use our <a href="https://rosebud.world/submit.html">online submission form</a>. This tool encrypts your article in your browser and uses the decentralized Matrix network to transfer your encrypted file. Our service then retrieves, decrypts, and uploads your article to IPFS while indexing it into our blog. Because we do not operate any servers that directly connect to you, we cannot see your IP address. (Note: The Matrix network does use IP addresses for node connections, so if you’re concerned about that, please use a VPN or Tor.)
+          <strong>Submission Form:</strong> Use our <a href="https://rosebud.world/submit.html">online submission form</a>. This tool encrypts your article in your browser and uses the decentralized Matrix network to transfer your encrypted file. Our private service then retrieves, decrypts, and uploads your article to IPFS while indexing it. Because we do not operate any servers that directly connect to you, we cannot see your IP address. (Note: The Matrix network does use IP addresses for node connections, so if you’re concerned about that, please use a VPN or Tor.)
         </li>
         <li>
-          <strong>IPFS Upload:</strong> Alternatively, you can load your article directly into IPFS. After uploading, submit the CID and required metadata using our submission form. If your article is encrypted (<a href="https://rosebud.world/encrypt.html">using our browser‑based encryption tool</a>), we will decrypt it and post it without any trace back to you as the author. Please follow our guidelines for submitting files via IPFS to ensure we have all the necessary metadata.
+          <strong>IPFS Upload:</strong> Alternatively, you can load your article directly into IPFS provide us with the CID and an indication of whether you would like us to pin your original post or add it as a new post. This short guide provides an overview of IPFS and the benefits of each approach. <a href="https://rosebud.world/encrypt.html">Here</a> you will find a page
+          that optionally will encrypt your article prior to you uploading to IPFS should you want to maximise your privacy, and will allow you to submit your file CID to the Rosebud team via Matrix.
         </li>
       </ol>
       <p>
         Once approved, articles are pinned on our IPFS node and listed <a href="articles.html">here</a>.
       </p>
-      <p>
+      <p style="font-weight: bold;">
         <em>Note:</em> To help keep content online and censorship-resistant, feel free to pin any approved articles on your own IPFS node.
       </p>
     </section>

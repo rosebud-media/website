@@ -30,7 +30,8 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    button[type="submit"] {
+    button[type="submit"],
+    button[type="button"] {
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -69,19 +70,13 @@
     </nav>
     <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
     <meta name="robots" content="index, follow" />
-
-    <!-- Optional: Cache control (not fully guaranteed) -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-
-    <!-- Open Graph for social previews (optional) -->
     <meta property="og:title" content="Rosebud World" />
     <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
     <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
     <meta property="og:url" content="https://rosebud.world" />
-
-    <!-- Twitter Card (optional) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Rosebud World" />
     <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
@@ -91,20 +86,25 @@
   <main>
     <section>
       <div class="form-container">
+        <p>Registration is optional but strongly advised even if you plan to post anonymously. You are not required to provide any Personal Identifiable Information (PII) for registration.</p>
+        <p>Registering ensures that no one later can submit articles under your blogger handle, it ensures you protect the the credibility of your blogger handle and posts.</p>
+        <p></p>
+        <p style="color: red; font-weight: bold;">Please backup and keep your key pair since this is what controls your account. If you lose this then we will not be able to restore to you control of your account!</p>
         <form id="bloggerForm">
           <div class="form-group">
             <label>Username: 
               <input type="text" name="username" required />
             </label>
           </div>
-          <!-- Public key is now generated automatically -->
+          <!-- Public key display -->
           <div class="form-group">
             <label>Your Public Key:</label>
             <textarea id="generatedPubKey" readonly required></textarea>
           </div>
           <div class="key-info">
-            Your public key has been auto-generated. It will be submitted as part of your profile.
+            Your public key has been auto‑generated (or imported). It will be submitted as part of your profile.
           </div>
+          <!-- Private key backup display -->
           <div class="form-group">
             <label>Backup Your Private Key (save this somewhere safe):
               <textarea id="backupPrivKey" readonly required></textarea>
@@ -113,6 +113,23 @@
           <div class="key-info">
             Your private key is shown above for backup purposes only. It is also stored locally in your browser.
           </div>
+          <!-- Export Key Pair -->
+          <div class="form-group">
+            <button type="button" id="exportKeysButton">Export Key Pair</button>
+          </div>
+          <div class="key-info">
+            Click the button above to download your key pair as a JSON file.
+          </div>
+          <!-- Import Section -->
+          <div class="form-group">
+            <label>Import Your Existing Key Pair (JSON format):</label>
+            <textarea id="importKeys" placeholder='Paste your key pair JSON here (e.g., {"publicKey": {...}, "privateKey": {...}})'></textarea>
+            <button type="button" id="importKeysButton">Use Imported Key Pair</button>
+          </div>
+          <div class="key-info">
+            If you have an existing key pair, paste it above and click "Use Imported Key Pair". Otherwise, a new key pair is generated automatically.
+          </div>
+          <!-- Other profile fields -->
           <div class="form-group">
             <label>Bio:
               <textarea name="bio" rows="3"></textarea>
@@ -185,40 +202,133 @@
       await Olm.init();
       console.log("Olm initialized.");
 
-      // --- Key Pair Generation ---
-      // Generate a key pair for the blogger (RSASSA-PKCS1-v1_5 with SHA-256)
-      const keyPair = await window.crypto.subtle.generateKey(
-        {
-          name: "RSASSA-PKCS1-v1_5",
-          modulusLength: 2048,
-          publicExponent: new Uint8Array([1, 0, 1]),
-          hash: "SHA-256"
-        },
-        true,
-        ["sign", "verify"]
-      );
-      
-      // Export the public key as a JWK
-      const publicKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.publicKey);
-      // Export the private key as a JWK (for backup)
-      const privateKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.privateKey);
-      
-      // Convert JWK objects to strings for display
-      const publicKeyString = JSON.stringify(publicKeyJwk, null, 2);
-      const privateKeyString = JSON.stringify(privateKeyJwk, null, 2);
-      
-      // Set the values in the read-only textareas
-      document.getElementById("generatedPubKey").value = publicKeyString;
-      document.getElementById("backupPrivKey").value = privateKeyString;
-      
-      // Save the private key backup to localStorage for later use (e.g., for signing submissions)
-      localStorage.setItem("userPrivateKey", privateKeyString);
-      
+      // Function to update displayed keys and save them to localStorage
+      function updateKeys(pubKey, privKey) {
+        const pubKeyStr = JSON.stringify(pubKey, null, 2);
+        const privKeyStr = JSON.stringify(privKey, null, 2);
+        document.getElementById("generatedPubKey").value = pubKeyStr;
+        document.getElementById("backupPrivKey").value = privKeyStr;
+        localStorage.setItem("userPublicKey", pubKeyStr);
+        localStorage.setItem("userPrivateKey", privKeyStr);
+      }
+
+      // Check if a key pair exists in localStorage; if not, generate a new one
+      let storedPubKey = localStorage.getItem("userPublicKey");
+      let storedPrivKey = localStorage.getItem("userPrivateKey");
+      if (storedPubKey && storedPrivKey) {
+        try {
+          storedPubKey = JSON.parse(storedPubKey);
+          storedPrivKey = JSON.parse(storedPrivKey);
+          updateKeys(storedPubKey, storedPrivKey);
+          console.log("Loaded key pair from localStorage.");
+        } catch (e) {
+          console.error("Error parsing stored keys, generating new key pair.", e);
+        }
+      } else {
+        try {
+          const keyPair = await window.crypto.subtle.generateKey(
+            {
+              name: "RSASSA-PKCS1-v1_5",
+              modulusLength: 2048,
+              publicExponent: new Uint8Array([1, 0, 1]),
+              hash: "SHA-256"
+            },
+            true,
+            ["sign", "verify"]
+          );
+          const publicKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.publicKey);
+          const privateKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.privateKey);
+          updateKeys(publicKeyJwk, privateKeyJwk);
+          console.log("Generated new key pair.");
+        } catch (e) {
+          console.error("Key generation failed:", e);
+        }
+      }
+
+      // --- Export Key Pair Button Handler ---
+      document.getElementById("exportKeysButton").addEventListener("click", () => {
+        const pubKeyStr = localStorage.getItem("userPublicKey");
+        const privKeyStr = localStorage.getItem("userPrivateKey");
+        if (!pubKeyStr || !privKeyStr) {
+          alert("No key pair available to export.");
+          return;
+        }
+        const exportData = JSON.stringify({
+          publicKey: JSON.parse(pubKeyStr),
+          privateKey: JSON.parse(privKeyStr)
+        }, null, 2);
+        const blob = new Blob([exportData], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "keypair.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // --- Import Key Pair Button Handler ---
+      document.getElementById("importKeysButton").addEventListener("click", () => {
+        const importArea = document.getElementById("importKeys");
+        const importedText = importArea.value.trim();
+        if (!importedText) {
+          alert("Please paste your key pair JSON in the import field.");
+          return;
+        }
+        try {
+          const importedKeys = JSON.parse(importedText);
+          if (importedKeys.publicKey && importedKeys.privateKey) {
+            updateKeys(importedKeys.publicKey, importedKeys.privateKey);
+            alert("Imported key pair successfully.");
+          } else {
+            alert("Invalid key pair format. Please include both publicKey and privateKey.");
+          }
+        } catch (e) {
+          console.error("Error importing key pair:", e);
+          alert("Error importing key pair. Please ensure it's valid JSON.");
+        }
+      });
+
+      // --- Populate Fields from bloggers.json if a Matching Public Key Is Found ---
+      async function populateFromBloggersJson() {
+        try {
+          const response = await fetch("bloggers.json");
+          if (!response.ok) throw new Error("Failed to fetch bloggers.json");
+          const bloggers = await response.json();
+          const localPubKey = JSON.parse(localStorage.getItem("userPublicKey"));
+          if (!localPubKey || !localPubKey.n) return;
+          const localModulus = localPubKey.n;
+          for (const username in bloggers) {
+            const blogger = bloggers[username];
+            // Check if blogger.pubkey exists and has an "n" property to compare.
+            if (blogger.pubkey && blogger.pubkey.n === localModulus) {
+              // Populate the fields with the blogger's data.
+              document.querySelector('input[name="username"]').value = username;
+              document.querySelector('textarea[name="bio"]').value = blogger.bio;
+              document.querySelector('input[name="profile_pic"]').value = blogger.profile_pic;
+              document.querySelector('input[name="twitter"]').value = blogger.socials.twitter;
+              document.querySelector('input[name="nostr"]').value = blogger.socials.nostr;
+              document.querySelector('input[name="mastodon"]').value = blogger.socials.mastodon;
+              document.querySelector('input[name="btc"]').value = blogger.wallets.btc;
+              document.querySelector('input[name="eth"]').value = blogger.wallets.eth;
+              document.querySelector('input[name="sol"]').value = blogger.wallets.sol;
+              document.querySelector('input[name="xmr"]').value = blogger.wallets.xmr;
+              document.querySelector('input[name="zec"]').value = blogger.wallets.zec;
+              console.log("Populated form fields from bloggers.json for:", username);
+              break;
+            }
+          }
+        } catch (err) {
+          console.error("Error populating from bloggers.json:", err);
+        }
+      }
+      // Call the function to populate fields.
+      populateFromBloggersJson();
+
       // --- Matrix Client Setup ---
       const homeserverUrl = "https://matrix.org";
       const userId = "@rosebud1:matrix.org";
       const accessToken = "syt_cm9zZWJ1ZDE_paIOyAvfPWeGbPsbtzrI_0bDq7k";
-      const bloggerRoomId = "!IfayqEDzJhwGSTvAZO:matrix.org"; // replace with actual room ID
+      const bloggerRoomId = "!IfayqEDzJhwGSTvAZO:matrix.org"; // Replace with actual room ID
 
       const matrixClient = matrixcs.createClient({
         baseUrl: homeserverUrl,
@@ -233,7 +343,8 @@
       matrixClient.once("sync", (state) => {
         if (state === "PREPARED") {
           console.log("Matrix client ready.");
-          enableFormSubmission(matrixClient, publicKeyJwk);
+          // Use the stored public key from localStorage for submission
+          enableFormSubmission(matrixClient, JSON.parse(localStorage.getItem("userPublicKey")));
         }
       });
 
@@ -245,12 +356,10 @@
           e.preventDefault();
           statusMessage.textContent = "Submitting...";
 
-          // Get form data (excluding public key, which is auto-generated)
           const formData = Object.fromEntries(new FormData(form).entries());
-          // Build the submission object, including the auto-generated public key
           const submission = {
             username: formData.username,
-            pubkey: pubkey, // use the generated public key (as a JWK object)
+            pubkey: pubkey, // Stored public key (as a JWK object)
             bio: formData.bio,
             profile_pic: formData.profile_pic,
             socials: {
@@ -269,7 +378,7 @@
           };
 
           try {
-            await client.sendEvent(bloggerRoomId, "m.room.message", {
+            await matrixClient.sendEvent(bloggerRoomId, "m.room.message", {
               msgtype: "m.text",
               body: "New Blogger Registration Submission",
               "rosebud:blogger_submission": submission
