@@ -5,6 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Approved Articles | Rosebud World</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Optional: Cache control (not fully guaranteed) -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Open Graph for social previews (optional) -->
+  <meta property="og:title" content="Rosebud World" />
+  <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
+  <meta property="og:url" content="https://rosebud.world" />
+
+  <!-- Twitter Card (optional) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rosebud World" />
+  <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta name="twitter:image" content="https://rosebud.world/images/preview.jpg" />
+
+  <style>
+    /* Additional styling for the authors list entries */
+    .blogger-entry {
+      margin-bottom: 0.5rem;
+    }
+    .blogger-entry a.filter-blogger {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 500;
+      margin-right: 0.5rem;
+    }
+    .blogger-entry a.filter-blogger:hover {
+      text-decoration: underline;
+    }
+    .blogger-entry a.blogger-profile-link {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+    .blogger-entry a.blogger-profile-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -13,42 +56,26 @@
       <a href="index.html">Home</a> |
       <a href="articles.html" class="underline-bold">Articles</a> |
       <a href="guidelines.html">Guidelines</a> |
-      <a href="ipfs.html">IPFS</a> |
-      <a href="submit.html">Submit</a> |
       <a href="blogger_registration_form.html">Registration</a> |
-      <a href="encrypt.html">Encrypt</a>
+      <a href="submit.html">Submit</a> |
+      <a href="encrypt.html">Submit via IPFS</a> |
+      <a href="ipfs.html">IPFS</a>
     </nav>
-    <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
-    <meta name="robots" content="index, follow" />
-
-    <!-- Optional: Cache control (not fully guaranteed) -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-
-    <!-- Open Graph for social previews (optional) -->
-    <meta property="og:title" content="Rosebud World" />
-    <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
-    <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
-    <meta property="og:url" content="https://rosebud.world" />
-
-    <!-- Twitter Card (optional) -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Rosebud World" />
-    <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
-    <meta name="twitter:image" content="https://rosebud.world/images/preview.jpg" />
   </header>
 
   <main>
-    <!-- Tag Cloud and Author List -->
+    <!-- Tag Cloud -->
     <section>
       <h2>Popular Tags</h2>
       <div id="tag-cloud"></div>
     </section>
 
+    <!-- Authors Section -->
     <section>
       <h2>Authors</h2>
-      <div id="authors-list"></div>
+      <div id="authors-list">
+        <!-- Authors list will be populated dynamically by main.js -->
+      </div>
     </section>
 
     <!-- Filtering Controls & Articles List -->
@@ -65,7 +92,7 @@
       </div>
 
       <div id="articles-list">
-        <!-- Articles will be loaded here dynamically -->
+        <!-- Articles will be loaded here dynamically by main.js -->
       </div>
     </section>
   </main>

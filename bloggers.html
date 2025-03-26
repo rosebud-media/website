@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogger Profile | Rosebud World</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Optional: Cache control (not fully guaranteed) -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Open Graph for social previews (optional) -->
+  <meta property="og:title" content="Rosebud World" />
+  <meta property="og:description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta property="og:image" content="https://rosebud.world/images/preview.jpg" />
+  <meta property="og:url" content="https://rosebud.world" />
+
+  <!-- Twitter Card (optional) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rosebud World" />
+  <meta name="twitter:description" content="A community-driven platform for free speech, powered by IPFS." />
+  <meta name="twitter:image" content="https://rosebud.world/images/preview.jpg" />
+  <style>
+    .profile-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .profile-field {
+      margin-bottom: 1rem;
+    }
+    .profile-field label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blogger Profile</h1>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="articles.html">Articles</a> |
+        <a href="guidelines.html">Guidelines</a> |
+        <a href="blogger_registration_form.html">Registration</a> |
+        <a href="submit.html">Submit</a> |
+        <a href="encrypt.html">Submit via IPFS</a> |
+        <a href="ipfs.html">IPFS</a>
+    </nav>
+  </header>
+  <main>
+    <div class="profile-container" id="profileContainer">
+      <!-- Blogger details will be loaded here -->
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Rosebud World</p>
+  </footer>
+  <script>
+    // Helper function to retrieve query parameters.
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const username = getQueryParam("username");
+      const container = document.getElementById("profileContainer");
+      if (!username) {
+        container.innerHTML = "<p>No blogger specified.</p>";
+        return;
+      }
+      try {
+        const response = await fetch("bloggers.json");
+        if (!response.ok) throw new Error("Failed to fetch bloggers.json");
+        const bloggers = await response.json();
+        if (!bloggers[username]) {
+          container.innerHTML = "<p>Blogger not found.</p>";
+          return;
+        }
+        const blogger = bloggers[username];
+        container.innerHTML = `
+          <h2>${username}'s Profile</h2>
+          <div class="profile-field"><label>Bio:</label> <span>${blogger.bio}</span></div>
+          <div class="profile-field"><label>Profile Picture:</label> <span>${blogger.profile_pic}</span></div>
+          <div class="profile-field"><label>Socials:</label>
+            <ul>
+              <li>Twitter: ${blogger.socials.twitter}</li>
+              <li>Nostr: ${blogger.socials.nostr}</li>
+              <li>Mastodon: ${blogger.socials.mastodon}</li>
+            </ul>
+          </div>
+          <div class="profile-field"><label>Wallets:</label>
+            <ul>
+              <li>BTC: ${blogger.wallets.btc}</li>
+              <li>ETH: ${blogger.wallets.eth}</li>
+              <li>SOL: ${blogger.wallets.sol}</li>
+              <li>XMR: ${blogger.wallets.xmr}</li>
+              <li>ZEC: ${blogger.wallets.zec}</li>
+            </ul>
+          </div>
+          <div class="profile-field"><label>Last Updated:</label> <span>${blogger.last_updated}</span></div>
+        `;
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>Error loading blogger profile.</p>";
+      }
+    });
+  </script>
+</body>
+</html>

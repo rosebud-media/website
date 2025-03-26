@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (brandParam) {
     const customLink = document.createElement("link");
     customLink.rel = "stylesheet";
-    // For local testing, the file should be named like custom-thenewautonomy.css
     customLink.href = `custom-${brandParam}.css`;
     document.head.appendChild(customLink);
   }
@@ -32,9 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(articles => {
       allArticles = articles;
 
-      // Render the articles and auxiliary components
+      // Render the articles
       renderArticles(allArticles);
+
+      // Generate the tag cloud
       generateTagCloud(allArticles);
+
+      // Generate the author list with post counts
       generateAuthorList(allArticles);
 
       // Apply filtering if URL parameters are present
@@ -55,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     authorSearchInput.addEventListener("input", filterArticles);
   }
 
-  // Function to filter articles by tag and author
+  // Filter articles by tag and author
   function filterArticles() {
     const tagSearchValue = tagSearchInput.value.trim().toLowerCase();
     const authorSearchValue = authorSearchInput.value.trim().toLowerCase();
@@ -64,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let tagMatch = true;
       let authorMatch = true;
 
-      // Check tag match if tag filter is applied
+      // Check tag match
       if (tagSearchValue) {
         if (article.tags && article.tags.length > 0) {
           tagMatch = article.tags.some(tag => tag.toLowerCase().includes(tagSearchValue));
@@ -73,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Check author match if author filter is applied
+      // Check author match
       if (authorSearchValue) {
         authorMatch = article.author.toLowerCase().includes(authorSearchValue);
       }
@@ -83,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderArticles(filtered);
   }
 
-  // Function to render articles on the page
+  // Render articles on the page
   function renderArticles(articles) {
     if (!articlesList) return;
     articlesList.innerHTML = "";
@@ -91,6 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
     articles.forEach(article => {
       const articleDiv = document.createElement("div");
       articleDiv.classList.add("article-item");
+      // Optionally store the author in data-author if you want the 1-second approach
+      // or other logic to read it from the DOM. But no longer needed if we unify logic here.
+      // articleDiv.setAttribute("data-author", article.author);
 
       // Title
       const titleEl = document.createElement("h3");
@@ -124,17 +130,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Link to view on IPFS Gateway
-      const linkEl = document.createElement("a");
-      linkEl.href = `https://ipfs.io/ipfs/${article.cid}`;
-      linkEl.target = "_blank";
-      linkEl.textContent = "Read on IPFS Gateway";
-      articleDiv.appendChild(linkEl);
+      if (article.cid) {
+        const linkEl = document.createElement("a");
+        linkEl.href = `https://ipfs.io/ipfs/${article.cid}`;
+        linkEl.target = "_blank";
+        linkEl.textContent = "Read on IPFS Gateway";
+        articleDiv.appendChild(linkEl);
+      }
 
       articlesList.appendChild(articleDiv);
     });
   }
 
-  // Function to generate a tag cloud
+  // Generate a tag cloud
   function generateTagCloud(articles) {
     if (!tagCloudContainer) return;
 
@@ -150,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tagCloudContainer.innerHTML = "";
     const sortedTags = Object.keys(tagCounts).sort();
+
+    if (sortedTags.length === 0) return;
 
     const countsArray = Object.values(tagCounts);
     const minCount = Math.min(...countsArray);
@@ -182,43 +192,64 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Function to generate an author list with post counts
+  // Generate the author list with post counts + profile links
   function generateAuthorList(articles) {
     if (!authorsListContainer) return;
 
+    // Step 1: Count posts from article data
     const authorCounts = {};
     articles.forEach(article => {
-      const lowerAuthor = article.author.toLowerCase();
-      if (!authorCounts[lowerAuthor]) {
-        authorCounts[lowerAuthor] = { name: article.author, count: 0 };
+      const authorName = article.author.trim();
+      if (!authorCounts[authorName]) {
+        authorCounts[authorName] = 0;
       }
-      authorCounts[lowerAuthor].count++;
+      authorCounts[authorName]++;
     });
 
-    const sortedAuthors = Object.values(authorCounts).sort((a, b) => {
-      if (b.count !== a.count) return b.count - a.count;
-      return a.name.localeCompare(b.name);
+    // Step 2: Sort authors by post count desc, then name asc
+    const sortedAuthors = Object.keys(authorCounts).sort((a, b) => {
+      const diff = authorCounts[b] - authorCounts[a];
+      if (diff !== 0) return diff;
+      return a.localeCompare(b);
     });
 
     authorsListContainer.innerHTML = "";
-    sortedAuthors.forEach(authorObj => {
-      const authorLink = document.createElement("a");
-      authorLink.href = "#";
-      authorLink.textContent = `${authorObj.name} (${authorObj.count})`;
-      authorLink.classList.add("author-list-item");
 
-      // Clicking an author sets the author filter
-      authorLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        authorSearchInput.value = authorObj.name;
-        filterArticles();
-      });
+    // Step 3: Fetch bloggers.json to see who has a profile
+    fetch("bloggers.json")
+      .then(response => response.json())
+      .then(bloggers => {
+        // For each author from the articles
+        sortedAuthors.forEach(authorName => {
+          const postCount = authorCounts[authorName];
+          const container = document.createElement("div");
+          container.classList.add("blogger-entry");
 
-      const div = document.createElement("div");
-      div.classList.add("author-item");
-      div.appendChild(authorLink);
+          // Filter link
+          const filterLink = document.createElement("a");
+          filterLink.href = "#";
+          filterLink.textContent = `${authorName} (${postCount})`;
+          filterLink.classList.add("filter-blogger");
+          filterLink.addEventListener("click", e => {
+            e.preventDefault();
+            authorSearchInput.value = authorName;
+            filterArticles();
+          });
+          container.appendChild(filterLink);
 
-      authorsListContainer.appendChild(div);
-    });
+          // If this author exists in bloggers.json, add a [Profile] link
+          if (bloggers[authorName]) {
+            const profileLink = document.createElement("a");
+            profileLink.href = "bloggers.html?username=" + encodeURIComponent(authorName);
+            profileLink.textContent = " [Profile]";
+            profileLink.target = "_blank";
+            profileLink.classList.add("blogger-profile-link");
+            container.appendChild(profileLink);
+          }
+
+          authorsListContainer.appendChild(container);
+        });
+      })
+      .catch(err => console.error("Failed to load bloggers.json for profiles:", err));
   }
 });

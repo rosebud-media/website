@@ -53,36 +53,18 @@
       },
       "last_updated": "2025-03-25T12:00:00Z"
     },
-    "LoverOfLiberty": {
-      "pubkey": "",
-      "bio": "",
-      "profile_pic": "",
-      "socials": {
-        "twitter": "",
-        "nostr": "",
-        "mastodon": ""
-      },
-      "wallets": {
-        "btc": "",
-        "eth": "",
-        "sol": "",
-        "xmr": "",
-        "zec": ""
-      },
-      "last_updated": "2025-03-25T12:00:00Z"
-    },
     "TheNewAutonomy": {
-      "pubkey": "",
-      "bio": "",
+      "pubkey": "12345",
+      "bio": "The man, the myth, the legend",
       "profile_pic": "",
       "socials": {
-        "twitter": "",
+        "twitter": "https://x.com/TheNewAutonomy",
         "nostr": "",
         "mastodon": ""
       },
       "wallets": {
         "btc": "",
-        "eth": "",
+        "eth": "0x7b1d71b3a3b773F6524Ed101be93557781A01A92",
         "sol": "",
         "xmr": "",
         "zec": ""
