@@ -365,7 +365,7 @@
           const formData = Object.fromEntries(new FormData(form).entries());
           const submission = {
             username: formData.username,
-            pubkey: pubkey, // Stored public key (as a JWK object)
+            pubkey: pubkey,
             bio: formData.bio,
             profile_pic: formData.profile_pic,
             socials: {
@@ -384,15 +384,47 @@
           };
 
           try {
-            await matrixClient.sendEvent(bloggerRoomId, "m.room.message", {
+            // Serialize the submission object for signing
+            const encoder = new TextEncoder();
+            const submissionData = encoder.encode(JSON.stringify(submission));
+
+            // Load private key from local storage
+            const privateKeyJwk = JSON.parse(localStorage.getItem("userPrivateKey"));
+            if (!privateKeyJwk) throw new Error("Private key missing. Please re-import or regenerate your key pair.");
+
+            const privateKey = await window.crypto.subtle.importKey(
+              "jwk",
+              privateKeyJwk,
+              { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+              false,
+              ["sign"]
+            );
+
+            // Sign the submission data
+            const signatureBuffer = await window.crypto.subtle.sign(
+              { name: "RSASSA-PKCS1-v1_5" },
+              privateKey,
+              submissionData
+            );
+
+            // Encode the signature as base64
+            const signatureBase64 = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)));
+
+            // Attach the signature to the submission
+            submission.signature = signatureBase64;
+
+            // Send the signed submission via Matrix
+            await client.sendEvent(bloggerRoomId, "m.room.message", {
               msgtype: "m.text",
               body: "New Blogger Registration Submission",
               "rosebud:blogger_submission": submission
             });
+
             statusMessage.textContent = "Submitted successfully!";
             form.reset();
+
           } catch (err) {
-            console.error(err);
+            console.error("Submission failed:", err);
             statusMessage.textContent = "Submission failed: " + err.message;
           }
         });
